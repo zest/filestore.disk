@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>soul-infra / base.script Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.spacelab.css">
+
+</head>
+
+<body>
+<div class="container-fluid">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">soul-infra / base.script</a>
+			<ul class="nav">
+
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+
+						<li>
+							<a href="filestore-disk.html">components/filestore-disk</a>
+						</li>
+
+
+					</ul>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+
+		<div class="span8">
+
+				<div id="main">
+
+
+
+
+	<span class="page-title">Index</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section class="readme-section">
+        <article><p><a href="https://codeclimate.com/github/pranavjha/soul"><img src="https://codeclimate.com/github/pranavjha/soul/badges/gpa.svg" alt="Quality"></a>
+<a href="https://david-dm.org/pranavjha/soul"><img src="https://david-dm.org/pranavjha/soul.svg" alt="Dependencies"></a>
+<a href="https://travis-ci.org/pranavjha/soul"><img src="https://secure.travis-ci.org/pranavjha/soul.svg" alt="Build Status"></a>
+<a href="https://coveralls.io/r/pranavjha/soul"><img src="https://img.shields.io/coveralls/pranavjha/soul.svg" alt="Coverage Status"></a></p>
+<h1><a href="http://pranavjha.github.io/soul">soul</a></h1>
+<p>soul is an integrator module written on node. It integrates components to create an application.</p>
+<h2>components</h2>
+<p>Components are blocks of code that can be combined together to create an application. Any soul application can have
+one or more of the below components</p>
+<ol>
+<li>Application<ul>
+<li>An application is a runnable component that, when run, starts a node server and deploys itself</li>
+</ul>
+</li>
+<li>User<ul>
+<li>User Component manages application users. Users use applications to work on data and files. This component also
+provides interfaces for authenticating, adding, modifying and deleting users.</li>
+</ul>
+</li>
+<li>Privilege<ul>
+<li>The Privilege component checks if a user has enough previlige to perform specific work on data and files. It
+also provides interfaces for adding, modifying and deleting previliges, as well as for granting and revoking
+privileges from users.</li>
+</ul>
+</li>
+<li>DataStore<ul>
+<li>The DataStore component allows persisting and modifying data for later use in the application.</li>
+</ul>
+</li>
+<li>FileStore<ul>
+<li>The FileStore component allows persisting and modifying files for later use in the application.</li>
+</ul>
+</li>
+</ol>
+<h2>component providers</h2>
+<p>Components can be served by <strong>ComponentProviders</strong>. ComponentProviders can be of two types:</p>
+<ol>
+<li><strong>Native providers</strong> that use nodejs</li>
+<li><strong>Non-Native providers</strong> that run on non native apis. The non-native providers will have adapters to adapt them to
+ node environment. The adapter for the below providers have to be implemented. Other adapters can be plugged in if
+ required.<ol>
+<li><strong>REST Provider</strong> provides adapter for components that run on rest apis</li>
+</ol>
+</li>
+</ol>
+<p>Every component is described by an interface in soul and must implement it.</p>
+<h2>stack</h2>
+<ul>
+<li><a href="http://nodejs.org/">Node.js</a> for modules</li>
+<li><a href="http://gruntjs.com/">GruntJS</a> for build automation</li>
+<li><a href="http://jasmine.github.io/">Jasmine</a> for testing</li>
+<li><a href="http://gotwarlost.github.io/istanbul/">Istanbul JS</a> for code coverage</li>
+<li><a href="http://usejsdoc.org/">JSDoc</a> with <a href="https://github.com/terryweiss/docstrap">Docstrap</a>
+  and <a href="http://jashkenas.github.io/docco/">Docco</a> for documentation</li>
+<li><a href="https://codeclimate.com">Code Climate</a> for code quality</li>
+<li><a href="https://david-dm.org">David</a> for node dependency watch</li>
+<li><a href="https://travis-ci.org">Travis CI</a> for build automation</li>
+<li><a href="https://coveralls.io">Coveralls</a> for code coverage</li>
+</ul>
+<h2>installation</h2>
+<h3>platform &amp; tools</h3>
+<p>You need to install Node.js and then the development tools. Node.js comes with a package manager called
+<a href="http://npmjs.org">npm</a> for installing NodeJS applications and libraries.
+<em> <a href="http://nodejs.org/download/">Install node.js</a> (requires node.js version &gt;= 0.10)
+</em> Install Grunt-CLI and bower as global npm modules:</p>
+<pre><code>npm install -g grunt-cli bower</code></pre>
+<p>(Note that you may need to uninstall grunt 0.3 globally before installing grunt-cli)</p>
+<h3>getting the code</h3>
+<p>Either clone this repository or fork it on GitHub and clone your fork:</p>
+<pre><code>git clone https://github.com/pranavjha/soul.git
+cd soul</code></pre>
+<h3>local dependencies</h3>
+<p>To install local dependencies, run the below command (from the project root folder):</p>
+<pre><code>npm install</code></pre>
+<p>(This will install the dependencies declared in the package.json file)</p>
+<h2>building &amp; running</h2>
+<p>Once the local dependencies are installed, you can build and run the application using grunt.</p>
+<p>To start the application, run the below command (from the project root folder):</p>
+<pre><code>npm init</code></pre>
+<p>In development mode, to validate changes on each save run the below command</p>
+<pre><code>npm observe</code></pre>
+<p>The both <code>init</code> and <code>observe</code> commands run tests, However to run tests separately, use</p>
+<pre><code>npm test</code></pre>
+<p>The documentation for the integrator can be found in the <code>docs</code> folder. To generate documentation from scratch, use</p>
+<pre><code>npm document</code></pre>
+<h2>the source</h2>
+<h3>component interfaces</h3>
+<ol>
+<li><strong><code>interfaces/infrastructure/ComponentProvider</code></strong> is the base class for all components and has the below methods<ol>
+<li><strong><code>describe()</code></strong><ul>
+<li>returns map of settings for the component with their description.</li>
+</ul>
+</li>
+<li><strong><code>init</code></strong><code>(settings, resolver)</code><ul>
+<li>initializes the component</li>
+</ul>
+</li>
+<li><strong><code>export</code></strong><code>(stream)</code><ul>
+<li>exports the component with objects into a stream</li>
+</ul>
+</li>
+<li><strong><code>import</code></strong><code>(stream)</code><ul>
+<li>imports the component from a stream</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong><code>interfaces/infrastructure/RunnableProvider</code></strong> <code>extends interfaces/infrastructure/ComponentProvider</code> is the base class for all
+ runnable components<ol>
+<li><strong><code>run</code></strong><code>()</code><ul>
+<li>runs the component</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong><code>adapters/RestComponentAdapter</code></strong> adapts rest components to the native apis<ol>
+<li><strong><code>adapt</code></strong><code>(componentName, restSettings)</code><ul>
+<li>adapts the REST providers to node native providers</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong><code>interfaces/components/ApplicationProvider</code></strong> <code>extends interfaces/infrastructure/RunnableProvider</code> is an interface describing the
+ specifications for Application Components<ol>
+<li><strong><code>run</code></strong><code>()</code><ul>
+<li>starts the application using the settings specified</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong><code>interfaces/components/UserProvider</code></strong> <code>extends interfaces/infrastructure/ComponentProvider</code> is an interface describing the
+ specifications for User Components<ol>
+<li><strong><code>create</code></strong><code>(user)</code><ul>
+<li>persists a user</li>
+</ul>
+</li>
+<li><strong><code>read</code></strong><code>(token)</code><ul>
+<li>returns the user object from the token</li>
+</ul>
+</li>
+<li><strong><code>update</code></strong><code>(user)</code><ul>
+<li>updates the user object</li>
+</ul>
+</li>
+<li><strong><code>remove</code></strong><code>(user)</code><ul>
+<li>removes a user</li>
+</ul>
+</li>
+<li><strong><code>authenticate</code></strong><code>(user)</code><ul>
+<li>authenticates and returns a token</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong><code>interfaces/components/PrivilegeProvider</code></strong> <code>extends interfaces/infrastructure/ComponentProvider</code> is an interface describing the
+ specifications for User Privilege Components<ol>
+<li><strong><code>create</code></strong><code>(privilege)</code><ul>
+<li>persists a privilege</li>
+</ul>
+</li>
+<li><strong><code>read</code></strong><code>(name)</code><ul>
+<li>returns the privilege</li>
+</ul>
+</li>
+<li><strong><code>update</code></strong><code>(privilege)</code><ul>
+<li>updates the privilegeobject</li>
+</ul>
+</li>
+<li><strong><code>remove</code></strong><code>(privilege)</code><ul>
+<li>removes a privilege</li>
+</ul>
+</li>
+<li><strong><code>allow</code></strong><code>(privilegeName, user)</code><ul>
+<li>adds a privilege to a user</li>
+</ul>
+</li>
+<li><strong><code>deny</code></strong><code>(privilegeName, user)</code><ul>
+<li>removes a privilege from a user</li>
+</ul>
+</li>
+<li><strong><code>isPrivileged</code></strong><code>(user, privilegeName)</code><ul>
+<li>checks if a user has a privilege</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong><code>interfaces/components/DataStoreProvider</code></strong> <code>extends interfaces/infrastructure/ComponentProvider</code> is an interface describing the
+ specifications for Data Store Components<ol>
+<li><strong><code>create</code></strong><code>(name, structure)</code><ul>
+<li>creates a store and returns a store object</li>
+</ul>
+</li>
+<li><strong><code>read</code></strong><code>(name)</code><ul>
+<li>reads a store by name</li>
+</ul>
+</li>
+<li><strong><code>update</code></strong><code>(name, structure)</code><ul>
+<li>updates a store</li>
+</ul>
+</li>
+<li><strong><code>remove</code></strong><code>(storeName)</code><ul>
+<li>removes a store</li>
+</ul>
+</li>
+<li><strong><code>&lt;store&gt;.create</code></strong><code>(storeName)</code><ul>
+<li>adds a store item to the store</li>
+</ul>
+</li>
+<li><strong><code>&lt;store&gt;.read</code></strong><code>(storeName, searchQuery)</code><ul>
+<li>get an element from the store</li>
+</ul>
+</li>
+<li><strong><code>&lt;store&gt;.update</code></strong><code>(storeName, item)</code><ul>
+<li>updates a store item</li>
+</ul>
+</li>
+<li><strong><code>&lt;store&gt;.remove</code></strong><code>(storeName, item)</code><ul>
+<li>deletes a store item</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong><code>interfaces/components/FileStoreProvider</code></strong> <code>extends interfaces/infrastructure/ComponentProvider</code> is an interface describing the
+ specifications for File Store Components<ol>
+<li><strong><code>&lt;directory&gt;.create</code></strong><code>(path, data)</code><ul>
+<li>creates a file or a directory depending on if the path ends in /.</li>
+</ul>
+</li>
+<li><strong><code>&lt;directory&gt;.read</code></strong><code>(path)</code><ul>
+<li>gets contents of a directory</li>
+</ul>
+</li>
+<li><strong><code>&lt;directory&gt;.update</code></strong><code>(oldPath, newPath)</code><ul>
+<li>updates the name of a directory</li>
+</ul>
+</li>
+<li><strong><code>&lt;directory&gt;.remove</code></strong><code>(path)</code><ul>
+<li>deletes a directory</li>
+</ul>
+</li>
+<li><strong><code>&lt;file&gt;.read</code></strong><code>(path)</code><ul>
+<li>reads contents of a file</li>
+</ul>
+</li>
+<li><strong><code>&lt;file&gt;.update</code></strong><code>(path, data)</code><ul>
+<li>updates a file with new contents</li>
+</ul>
+</li>
+<li><strong><code>&lt;file&gt;.remove</code></strong><code>(path)</code><ul>
+<li>deletes a file</li>
+</ul>
+</li>
+<li><strong><code>root</code></strong><code>()</code><ul>
+<li>gets the root folder for the File Store</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3>the resolver</h3>
+<p>Soul framework also has a resolver in which the components will be registered.</p>
+<p><strong><code>code/resolver</code></strong> resolves the component dependencies and is responsible for starting any application built on top of
+them. This module has the below functions</p>
+<ol>
+<li><strong><code>register</code></strong><code>(name, component)</code><ul>
+<li>registers a component.</li>
+</ul>
+</li>
+<li><strong><code>resolve</code></strong><code>(name)</code><ul>
+<li>gets the dependency by name</li>
+</ul>
+</li>
+<li><strong><code>run</code></strong><code>()</code><ul>
+<li>runs the Runnable components in the resolver</li>
+</ul>
+</li>
+</ol></article>
+    </section>
+
+
+
+
+
+
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+
+					<hr/>
+					<br />
+
+
+		<span class="copyright">
+		<div style='text-align:left;border-color:#626262;background-color:#262626;color:#fff;padding:20px;'>This is free and unencumbered software released into the public domain.<br/>Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.<br/>In jurisdictions that recognize copyright laws, the author or authors of this software dedicate any and all copyright interest in the software to the public domain.<br/>We make this dedication for the benefit of the public at large and to the detriment of our heirs and successors.<br/>We intend this dedication to be an overt act of relinquishment in perpetuity of all present and future rights to this software under copyright law.<br/><br/>THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.<br/><br/>For more information, please refer to <a href='http://unlicense.org'>UNLICENSE</a></div>
+		</span>
+					<br />
+
+		<span class="jsdoc-message">
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
+		on August, 2014 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		</span>
+				</footer>
+			</div>
+
+
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
+
+			<br clear="both">
+		</div>
+
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
+
+	<script>
+		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : "100px"
+			} );
+
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$( '.dropdown-toggle' ).dropdown();
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find( "code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html( exampleText );
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : false,
+				showMenu : true,
+				enableDoclinks : true
+			} );
+		} );
+	 </script>
+
+
+
+	<!--Navigation and Symbol Display-->
+
+
+
+	<!--Google Analytics-->
+
+
+</body>
+</html>

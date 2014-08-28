@@ -1,0 +1,59 @@
+{
+    "name": "filestore.disk",
+    "description": "filestore.disk is a filestore component for soul that manages files on disks",
+    "version": "0.0.1",
+    "main": "./lib/index",
+    "private": true,
+    "scripts": {
+        "coverage": "grunt coverage",
+        "cleanup": "grunt cleanup",
+        "init": "grunt init",
+        "test": "grunt test",
+        "document": "grunt document",
+        "observe": "grunt observe"
+    },
+    "maintainers": [
+        {
+            "name": "Pranav Jha",
+            "email": "jha.pranav.s@gmail.com",
+            "web": "https://github.com/soul-infra"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "unlicense",
+            "url": "http://unlicense.org"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/soul-infra/filestore.disk.git"
+        }
+    ],
+    "dependencies": {
+        "base.logger": "soul-infra/base.logger",
+        "base.specifications": "soul-infra/base.specifications",
+        "q": "*"
+    },
+    "devDependencies": {
+        "grunt": "*",
+        "grunt-contrib-clean": "*",
+        "grunt-contrib-watch": "*",
+        "grunt-jslint": "*",
+        "ink-docstrap": "*",
+        "grunt-jsdoc": "*",
+        "grunt-jasmine-node": "*",
+        "grunt-istanbul": "*",
+        "grunt-env": "*",
+        "merge": "*",
+        "grunt-exec": "*",
+        "coveralls": "*"
+    },
+    "directories": {
+        "lib": "lib",
+        "doc": "doc",
+        "test": "test",
+        "out": ".out"
+    }
+}
