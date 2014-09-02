@@ -1,8 +1,9 @@
 'use strict';
-var disk = require('./injector')();
+var disk = require('../lib'),
+    expect = require('chai').expect;
 describe('filestore.disk', function () {
     // it should return a module
     it('it should return a module', function () {
-        expect(disk).not.toBe(undefined);
+        expect(disk).not.to.equal(undefined);
     });
 });
