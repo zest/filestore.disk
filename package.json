@@ -55,9 +55,7 @@
     },
     "config": {
         "blanket": {
-            "pattern": [
-                "lib"
-            ]
+            "pattern": "//^(?!.*/node_modules/).*/lib/"
         }
     }
 }
