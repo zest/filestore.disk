@@ -40,8 +40,8 @@ describe('filestore.disk', function () {
             expect(data[0].extension).to.equal('');
             /*jshint -W030 */
             expect(data[0].created).to.exist;
+            expect(data[0].modified).to.exist;
             /*jshint -W030 */
-            expect(data[0].modified).to.eql(data[0].created);
             expect(data[0].name).to.equal('one');
             expect(data[0].path).to.equal(path.join('folder-two', 'one'));
             expect(data[0].type).to.equal('D');
@@ -51,8 +51,8 @@ describe('filestore.disk', function () {
             expect(data[0].extension).to.equal('.txt');
             /*jshint -W030 */
             expect(data[0].created).to.exist;
+            expect(data[0].modified).to.exist;
             /*jshint -W030 */
-            expect(data[0].modified).to.eql(data[0].created);
             expect(data[0].name).to.equal('text1.txt');
             expect(data[0].path).to.equal(path.join('folder-two', 'one', 'text1.txt'));
             expect(data[0].type).to.equal('F');
@@ -76,8 +76,8 @@ describe('filestore.disk', function () {
             expect(data[0].extension).to.equal('.txt');
             /*jshint -W030 */
             expect(data[0].created).to.exist;
+            expect(data[0].modified).to.exist;
             /*jshint -W030 */
-            expect(data[0].modified).to.eql(data[0].created);
             expect(data[0].name).to.equal('text1.txt');
             expect(data[0].path).to.equal(path.join('folder-five', 'ten', 'text1.txt'));
             expect(data[0].type).to.equal('F');
@@ -97,8 +97,8 @@ describe('filestore.disk', function () {
             expect(data[0].extension).to.equal('.txt');
             /*jshint -W030 */
             expect(data[0].created).to.exist;
+            expect(data[0].modified).to.exist;
             /*jshint -W030 */
-            expect(data[0].modified).to.eql(data[0].created);
             expect(data[0].name).to.equal('22.txt');
             expect(data[0].path).to.equal(path.join('folder-renamed', 'ten', '22.txt'));
             expect(data[0].type).to.equal('F');
