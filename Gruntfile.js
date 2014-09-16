@@ -225,7 +225,8 @@ module.exports = function (grunt) {
         'jshint:lib',
         'jshint:test',
         'jshint:build',
-        'mochacov:test'
+        'mochacov:test',
+        'mochacov:coverageTerm'
     ]);
     // document script
     grunt.registerTask('document', [
