@@ -37,7 +37,8 @@
         "merge": "*",
         "findit": "*",
         "minimatch": "*",
-        "tar.gz": "*"
+        "tar": "*",
+        "fstream": "*"
     },
     "devDependencies": {
         "grunt": "0.4.5",
