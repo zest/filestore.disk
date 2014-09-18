@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>soul-infra / base.script Index</title>
+	<title>soul-infra / base.script Source: filestore/watch.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +20,7 @@
 		<div class="navbar-inner">
 			<a class="brand" href="index.html">soul-infra / base.script</a>
 			<ul class="nav">
-				
+
 				<li class="dropdown">
 					<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b
 						class="caret"></b></a>
@@ -103,56 +103,84 @@
 
 	<div class="row-fluid">
 
-		
-		<div class="span8">
-			
+
+			<div class="span12">
+
 				<div id="main">
-					
-
-
-	
-	<span class="page-title">Index</span>
-	
-	
 
 
 
+		<h1 class="page-title">Source: filestore/watch.js</h1>
 
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-    <section class="readme-section">
-        <article><p><a href="https://david-dm.org/soul-infra/filestore.disk#info=dependencies&amp;view=list"><img src="http://img.shields.io/david/soul-infra/filestore.disk.svg?style=flat-square" alt="Dependencies"></a>
-<a href="https://david-dm.org/soul-infra/filestore.disk#info=devDependencies&amp;view=list"><img src="http://img.shields.io/david/dev/soul-infra/filestore.disk.svg?style=flat-square" alt="Dev Dependencies"></a>
-<a href="https://david-dm.org/soul-infra/filestore.disk#info=peerDependencies&amp;view=list"><img src="http://img.shields.io/david/peer/soul-infra/filestore.disk.svg?style=flat-square" alt="Peer Dependencies"></a></p>
-<p><a href="https://codeclimate.com/github/soul-infra/filestore.disk"><img src="http://img.shields.io/codeclimate/github/soul-infra/filestore.disk.svg?style=flat-square" alt="Quality"></a>
-<a href="https://travis-ci.org/soul-infra/filestore.disk"><img src="http://img.shields.io/travis/soul-infra/filestore.disk.svg?style=flat-square" alt="Build Status"></a>
-<a href="https://coveralls.io/r/soul-infra/filestore.disk"><img src="http://img.shields.io/coveralls/soul-infra/filestore.disk.svg?style=flat-square" alt="Coverage Status"></a>
-<a href="http://unlicense.org"><img src="http://img.shields.io/badge/license-UNLICENSE-brightgreen.svg?style=flat-square" alt="License"></a></p>
-<h1>soul-infra / filestore.disk</h1>
-<blockquote>
-<p><a href="https://github.com/soul-infra/base.logger/blob/master/README.md"><img src="http://img.shields.io/badge/base.logger-optional-green.svg?style=flat-square" alt="base.logger"></a>
-<a href="https://github.com/soul-infra/base.resolver/blob/master/README.md#explicit-dependencies"><img src="http://img.shields.io/badge/options-required-orange.svg?style=flat-square" alt="options"></a></p>
-<p>filestore.disk is a filestore component for soul that manages files on disks drives.</p>
-</blockquote>
-<h2>Component Methods</h2>
-<p>The filestore component exposes the below methods for file and directory handling</p>
-<p>TODO</p></article>
-    </section>
-
-
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript ">'use strict';
+/**
+ * @fileOverview The filestore-disk/watch module returns the {@link module:filestore-disk/watch~Watch|watch}
+ * function.
+ * @module filestore-disk/watch
+ * @requires path
+ */
+var path = require('path');
+/**
+ * Returns an watch function using the config object
+ * @param {module:filestore-disk~Config} config - the config object
+ * @returns {module:filestore-disk/watch~Watch} the watch function
+ */
+module.exports = function (config) {
+    var logger = config.logger('filestore.disk/watch');
+    /**
+     * This function registers watcher functions that get called everytime any of the watched files change
+     * @param {String} baseDir - The basedir to watch for file additions and deletions
+     * @param {String} [globPattern] - the glob pattern is used to filter watched files list in baseDir. If not
+     * specified, all files inside baseDir are watched.
+     * @param {String} [eventType] - eventType, if specified, can be &lt;b>create&lt;/b> or &lt;b>remove&lt;/b> which will
+     * restrict watching only file creations or deletions respectively. If not specified, both creation and deletion
+     * will be watched.
+     * @param {module:filestore-disk/watch~Callback} callback - the callback function to be called when a watched file
+     * is changed, created or removed
+     * @callback module:filestore-disk/watch~Watch
+     * @see module:filestore-disk/unwatch~Unwatch
+     */
+    return function (baseDir, globPattern, eventType, callback) {
+        var minimatch = require('minimatch');
+        // normalizing params
+        if (!callback && !eventType) {
+            // 2 params
+            callback = globPattern;
+            eventType = 'create,remove';
+            globPattern = '**/*';
+        } else if (!callback) {
+            // 3 params
+            callback = eventType;
+            eventType = 'create,remove';
+            if (globPattern === 'create' || globPattern === 'remove') {
+                eventType = globPattern;
+                globPattern = '**/*';
+            }
+        }
+        eventType.split(',').forEach(function (thisEvent) {
+            config.fileEvent.on(thisEvent, function (filePath) {
+                logger.log(thisEvent, 'captured on', filePath);
+                logger.log('matching with pattern', globPattern);
+                if (minimatch(path.relative(baseDir, filePath), globPattern)) {
+                    callback(filePath, thisEvent);
+                }
+            });
+        });
+    };
+};
+// defining the watch callback
+/**
+ * The Watch function is sent as the last argument to the {@link module:filestore-disk/watch~Watch|watch} function.
+ * @param {String} filePath - the path of the file that caused the watcher to be invoked. This is the file that has
+ * been changed, created or removed
+ * @param {String} event - the event that triggered the watcher function. Can be &lt;b>create&lt;/b> or &lt;b>remove&lt;/b>.
+ * @callback module:filestore-disk/watch~Callback
+ */</pre>
+	</article>
+</section>
 
 
 
@@ -162,16 +190,16 @@
 
 				<div class="clearfix"></div>
 				<footer>
-					
+
 					<hr/>
 					<br />
-					
-					
+
+
 		<span class="copyright">
 		<div style='text-align:left;border-color:#626262;background-color:#262626;color:#fff;padding:20px;'>This is free and unencumbered software released into the public domain.<br/>Anyone is free to copy, modify, publish, use, compile, sell, or distribute this software, either in source code form or as a compiled binary, for any purpose, commercial or non-commercial, and by any means.<br/>In jurisdictions that recognize copyright laws, the author or authors of this software dedicate any and all copyright interest in the software to the public domain.<br/>We make this dedication for the benefit of the public at large and to the detriment of our heirs and successors.<br/>We intend this dedication to be an overt act of relinquishment in perpetuity of all present and future rights to this software under copyright law.<br/><br/>THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.<br/><br/>For more information, please refer to <a href='http://unlicense.org'>UNLICENSE</a></div>
 		</span>
 					<br />
-					
+
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a>
 		on September, 2014 using the <a
@@ -180,11 +208,7 @@
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
-			
+
 			<br clear="both">
 		</div>
 
@@ -251,11 +275,11 @@
 
 
 	<!--Navigation and Symbol Display-->
-	
+
 
 
 	<!--Google Analytics-->
-	
+
 
 </body>
 </html>

@@ -7,8 +7,20 @@
 [![Coverage Status][coverage-status-image]][coverage-status-link]
 [![License][license-image]][license-link]
 
+
 # soul-infra / filestore.disk
-> filestore.disk is a filestore component for soul that manages files on disks
+> [![base.logger][soul-base-logger-optional-image]][soul-base-logger-optional-link]
+> [![options][soul-option-required-image]][soul-option-required-link]
+>
+> filestore.disk is a filestore component for soul that manages files on disks drives.
+
+
+## Component Methods
+
+The filestore component exposes the below methods for file and directory handling
+
+TODO
+
 
 [dependencies-image]: http://img.shields.io/david/soul-infra/filestore.disk.svg?style=flat-square
 [dependencies-link]: https://david-dm.org/soul-infra/filestore.disk#info=dependencies&view=list
@@ -24,3 +36,7 @@
 [build-status-link]: https://travis-ci.org/soul-infra/filestore.disk
 [coverage-status-image]: http://img.shields.io/coveralls/soul-infra/filestore.disk.svg?style=flat-square
 [coverage-status-link]: https://coveralls.io/r/soul-infra/filestore.disk
+[soul-base-logger-optional-image]: http://img.shields.io/badge/base.logger-optional-green.svg?style=flat-square
+[soul-base-logger-optional-link]: https://github.com/soul-infra/base.logger/blob/master/README.md
+[soul-option-required-image]: http://img.shields.io/badge/options-required-orange.svg?style=flat-square
+[soul-option-required-link]: https://github.com/soul-infra/base.resolver/blob/master/README.md#explicit-dependencies
