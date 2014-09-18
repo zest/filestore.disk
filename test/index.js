@@ -182,16 +182,20 @@ describe('filestore.disk', function () {
                 });
             });
         }).then(function () {
-            return disk.remove('folder-watch/one/very/deep/inside/in/a/folder/match.txt');
+            return q.all([
+                disk.remove('folder-watch/one/very/deep/inside/in/a/folder/match.txt'),
+                disk.rename('folder-watch/one/two/three/match.txt', 'folder-watch/one/two/three/match.ntxt'),
+                disk.rename('folder-watch/one/match.txt', 'folder-watch/one-renamed/match.txt')
+            ]);
         }).then(function () {
             return q.promise(function (resolve) {
                 process.nextTick(function () {
                     expect(spy1).to.have.callCount(2);
                     expect(spy11).to.have.callCount(2);
-                    expect(spy2).to.have.callCount(9);
-                    expect(spy21).to.have.callCount(1);
-                    expect(spy3).to.have.callCount(10);
-                    expect(spy31).to.have.callCount(9);
+                    expect(spy2).to.have.callCount(12);
+                    expect(spy21).to.have.callCount(3);
+                    expect(spy3).to.have.callCount(14);
+                    expect(spy31).to.have.callCount(11);
                     expect(spy21).to.have.been.calledWith(
                         'folder-watch/one/very/deep/inside/in/a/folder/match.txt',
                         'remove'
@@ -202,8 +206,8 @@ describe('filestore.disk', function () {
             });
         });
     });
-    // it should be able to deserialize and serialize files
-    it('should be able to deserialize and serialize files', function () {
+    // it should be able to deserialize and serialize folders
+    it('should be able to deserialize and serialize folders', function () {
         return q.all([
             disk.create('folder-serialize/match.txt', 'hello romeo'),
             disk.create('folder-serialize/nmatch.txt', 'hello romeo'),
@@ -224,8 +228,8 @@ describe('filestore.disk', function () {
             expect(data.length).to.equal(8);
         });
     });
-    // it should not watch symlinks
-    it('should not find symlinks', function () {
+    // should not search inside symlinks when given a glob pattern
+    it('should not search inside symlinks when given a glob pattern', function () {
         return q.all([
             disk.create('folder-watch-sym/match.txt', 'hello romeo'),
             disk.create('folder-watch-sym/nmatch.txt', 'hello romeo'),
@@ -246,7 +250,10 @@ describe('filestore.disk', function () {
             disk.create('folder-watch-sym-link/one/two/three/match.txt', 'hello romeo'),
             disk.create('folder-watch-sym-link/one/very/deep/inside/in/a/folder/match.txt', 'hello romeo')
         ]).then(function () {
-            return disk.link('folder-watch-sym-link/match.txt', 'folder-watch-sym/folder-watch-sym-link/match.txt');
+            return q.all([
+                disk.link('folder-watch-sym-link/match.txt', 'folder-watch-sym/folder-watch-sym-link/match.txt'),
+                disk.link('folder-watch-sym-link', 'folder-watch-sym/folder-watch-sym-link/link')
+            ]);
         }).then(function () {
             return disk.find('folder-watch-sym', '**/*.txt');
         }).then(function (data) {
@@ -302,7 +309,7 @@ describe('filestore.disk', function () {
                 this.push(buf);
             }
         };
-        return expect(disk.create('streamed-file.txt/', new Counter())).to.be.rejected;
+        return expect(disk.create('.', new Counter())).to.be.rejected;
     });
     // it should be able to handle invalid streams for deserialization
     it('should be able to handle invalid streams for deserialization', function () {
