@@ -176,10 +176,6 @@ module.exports = function (grunt) {
                     template: './node_modules/ink-docstrap/template'
                 }
             }
-        },
-        exec: {
-            coverage: 'cat "<%= pkg.directories.out %>/coverage/reports/lcov/lcov.info" ' +
-                '| "./node_modules/coveralls/bin/coveralls.js"'
         }
     });
     // for faster builds we make sure that only the changed files are validated
