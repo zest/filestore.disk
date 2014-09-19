@@ -33,12 +33,12 @@
     ],
     "dependencies": {
         "q": "1.0.1",
-        "fs-extra": "*",
-        "merge": "*",
-        "findit": "*",
-        "minimatch": "*",
-        "tar": "*",
-        "fstream": "*"
+        "fs-extra": "0.11.1",
+        "merge": "1.2.0",
+        "findit": "2.0.0",
+        "minimatch": "1.0.0",
+        "tar": "1.0.1",
+        "fstream": "1.0.2"
     },
     "devDependencies": {
         "grunt": "0.4.5",
