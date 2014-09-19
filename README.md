@@ -8,7 +8,7 @@
 [![License][license-image]][license-link]
 
 
-# soul-infra / filestore.disk
+# zest / filestore.disk
 
 > [![base.logger][soul-base-logger-optional-image]][soul-base-logger-optional-link]
 > [![options][soul-option-required-image]][soul-option-required-link]
@@ -94,21 +94,21 @@ self-explainatory. For a complete documentation, refer the jsdocs.
     This function removes all file watchers registered by the `watch` function
 
 
-[dependencies-image]: http://img.shields.io/david/soul-infra/filestore.disk.svg?style=flat-square
-[dependencies-link]: https://david-dm.org/soul-infra/filestore.disk#info=dependencies&view=list
-[dev-dependencies-image]: http://img.shields.io/david/dev/soul-infra/filestore.disk.svg?style=flat-square
-[dev-dependencies-link]: https://david-dm.org/soul-infra/filestore.disk#info=devDependencies&view=list
-[peer-dependencies-image]: http://img.shields.io/david/peer/soul-infra/filestore.disk.svg?style=flat-square
-[peer-dependencies-link]: https://david-dm.org/soul-infra/filestore.disk#info=peerDependencies&view=list
+[dependencies-image]: http://img.shields.io/david/zest/filestore.disk.svg?style=flat-square
+[dependencies-link]: https://david-dm.org/zest/filestore.disk#info=dependencies&view=list
+[dev-dependencies-image]: http://img.shields.io/david/dev/zest/filestore.disk.svg?style=flat-square
+[dev-dependencies-link]: https://david-dm.org/zest/filestore.disk#info=devDependencies&view=list
+[peer-dependencies-image]: http://img.shields.io/david/peer/zest/filestore.disk.svg?style=flat-square
+[peer-dependencies-link]: https://david-dm.org/zest/filestore.disk#info=peerDependencies&view=list
 [license-image]: http://img.shields.io/badge/license-UNLICENSE-brightgreen.svg?style=flat-square
 [license-link]: http://unlicense.org
-[quality-image]: http://img.shields.io/codeclimate/github/soul-infra/filestore.disk.svg?style=flat-square
-[quality-link]: https://codeclimate.com/github/soul-infra/filestore.disk
-[build-status-image]: http://img.shields.io/travis/soul-infra/filestore.disk.svg?style=flat-square
-[build-status-link]: https://travis-ci.org/soul-infra/filestore.disk
-[coverage-status-image]: http://img.shields.io/coveralls/soul-infra/filestore.disk.svg?style=flat-square
-[coverage-status-link]: https://coveralls.io/r/soul-infra/filestore.disk
+[quality-image]: http://img.shields.io/codeclimate/github/zest/filestore.disk.svg?style=flat-square
+[quality-link]: https://codeclimate.com/github/zest/filestore.disk
+[build-status-image]: http://img.shields.io/travis/zest/filestore.disk.svg?style=flat-square
+[build-status-link]: https://travis-ci.org/zest/filestore.disk
+[coverage-status-image]: http://img.shields.io/coveralls/zest/filestore.disk.svg?style=flat-square
+[coverage-status-link]: https://coveralls.io/r/zest/filestore.disk
 [soul-base-logger-optional-image]: http://img.shields.io/badge/base.logger-optional-green.svg?style=flat-round
-[soul-base-logger-optional-link]: https://github.com/soul-infra/base.logger/blob/master/README.md
+[soul-base-logger-optional-link]: https://github.com/zest/base.logger/blob/master/README.md
 [soul-option-required-image]: http://img.shields.io/badge/options-required-orange.svg?style=flat-round
-[soul-option-required-link]: https://github.com/soul-infra/base.resolver/blob/master/README.md#explicit-dependencies
+[soul-option-required-link]: https://github.com/zest/base.resolver/blob/master/README.md#explicit-dependencies
