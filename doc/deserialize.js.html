@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>soul-infra / base.script Source: filestore/deserialize.js</title>
+	<title>soul-infra / filestore.disk Source: filestore/deserialize.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,7 +18,7 @@
 <div class="container-fluid">
 	<div class="navbar navbar-fixed-top navbar-inverse">
 		<div class="navbar-inner">
-			<a class="brand" href="index.html">soul-infra / base.script</a>
+			<a class="brand" href="index.html">soul-infra / filestore.disk</a>
 			<ul class="nav">
 				
 				<li class="dropdown">
@@ -183,7 +183,8 @@
  */
 var path = require('path'),
     q = require('q'),
-    tar = require('tar');
+    tar = require('tar'),
+    zlib = require('zlib');
 /**
  * Returns a deserialize function using the config object
  * @param {module:filestore-disk~Config} config - the config object
@@ -196,7 +197,7 @@ module.exports = function (config) {
          * @function deserialize
          * @instance
          * @description The deserialize function is used to import an exported filestore stream into a folder. The
-         * exported filestore stream is essentially a tarball of a complete folder hierarchy that is extracted at the
+         * exported filestore stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the
          * relative path.
          * @param {String} relativePath - the directory path at which the serialized output is to be deserialized
          * @param {external:Readable} readStream - the readable stream which is to be deserialized
@@ -205,18 +206,25 @@ module.exports = function (config) {
          */
         deserialize = function (relativePath, readStream) {
             logger.error('deserializing stream into', relativePath);
-            var deferred = q.defer();
-            readStream.pipe(tar.Extract(
+            var deferred = q.defer(),
+                errorHandler = function (error) {
+                    logger.error('unzipping failed with error');
+                    logger.error(error);
+                    return deferred.reject(error);
+                };
+            readStream.on(
+                'error',
+                errorHandler
+            ).pipe(zlib.createGunzip()).on(
+                'error',
+                errorHandler
+            ).pipe(tar.Extract(
                 {
                     path: path.join(config.baseDir, relativePath)
                 }
             )).on(
                 'error',
-                function (error) {
-                    logger.error('unzipping failed with error');
-                    logger.error(error);
-                    return deferred.reject(error);
-                }
+                errorHandler
             ).on(
                 'end',
                 function () {

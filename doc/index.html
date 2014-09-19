@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>soul-infra / base.script Index</title>
+	<title>soul-infra / filestore.disk Index</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,7 +18,7 @@
 <div class="container-fluid">
 	<div class="navbar navbar-fixed-top navbar-inverse">
 		<div class="navbar-inner">
-			<a class="brand" href="index.html">soul-infra / base.script</a>
+			<a class="brand" href="index.html">soul-infra / filestore.disk</a>
 			<ul class="nav">
 				
 				<li class="dropdown">
@@ -215,20 +215,6 @@ passed to the function, a file is created. Otherwise, a directory is created. If
 or directory is to be created does not exist, it is also created.</p>
 <p>This function returns a Promise that gets resolved when the file or directory is created.</p>
 </li>
-<li><p><strong><code>deserialize</code></strong><code>(relativePath, readStream)</code> &#8594; <code>Promise</code></p>
-<p>The deserialize function is used to import an exported filestore stream into a folder. The exported filestore
-stream is essentially a tarball of a complete folder hierarchy that is extracted at the relative path.</p>
-<p>This function returns a Promise that gets resolved import succeeds.</p>
-</li>
-<li><p><strong><code>find</code></strong><code>(dirPath, globPattern)</code> &#8594; <code>Promise</code></p>
-<p>This function searches a directory for files that match a glob Pattern and returns an array of file metadata for
-all such files.</p>
-<p>It returns a Promise that gets resolved with an array of objects, each representing a matched file.</p>
-</li>
-<li><p><strong><code>getStream</code></strong><code>(relativePath)</code> &#8594; <code>ReadStream</code></p>
-<p>This function creates and returns a readable stream from a file path.</p>
-<p>It returns a readable stream object created from the file.</p>
-</li>
 <li><p><strong><code>link</code></strong><code>(originalPath, linkPath)</code> &#8594; <code>Promise</code></p>
 <p>This function creates a symbolic link at linkPath pointing to the file or directory at original path.</p>
 <p>It returns a Promise that gets resolved when the symbolic link is created.</p>
@@ -242,20 +228,34 @@ folder.</li>
 <li>The actual read contents if the read path is a file or a symlink to a file.</li>
 </ul>
 </li>
-<li><p><strong><code>remove</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
-<p>This function deletes anything at the given relative path (including its children if the path corresponds to a
-directory)</p>
-<p>It returns a Promise that gets resolved when delete succeeds.</p>
+<li><p><strong><code>getStream</code></strong><code>(relativePath)</code> &#8594; <code>ReadStream</code></p>
+<p>This function creates and returns a readable stream from a file path.</p>
+<p>It returns a readable stream object created from the file.</p>
+</li>
+<li><p><strong><code>find</code></strong><code>(dirPath, globPattern)</code> &#8594; <code>Promise</code></p>
+<p>This function searches a directory for files that match a glob Pattern and returns an array of file metadata for
+all such files.</p>
+<p>It returns a Promise that gets resolved with an array of objects, each representing a matched file.</p>
 </li>
 <li><p><strong><code>rename</code></strong><code>(oldPath, newPath)</code> &#8594; <code>Promise</code></p>
 <p>This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPath does not exist, it
 is created.</p>
 <p>It returns a Promise that gets resolved when the move succeeds.</p>
 </li>
+<li><p><strong><code>remove</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
+<p>This function deletes anything at the given relative path (including its children if the path corresponds to a
+directory)</p>
+<p>It returns a Promise that gets resolved when delete succeeds.</p>
+</li>
 <li><p><strong><code>serialize</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
-<p>This function serializes any folder specified by the relativePath and creates a tarball stream from it. This stream
+<p>This function serializes any folder specified by the relativePath and creates a tar.gz stream from it. This stream
 can be stored or used to copy the folder to another location using deserialize</p>
 <p>It returns a Promise that gets resolved with the read stream when serialization succeeds.</p>
+</li>
+<li><p><strong><code>deserialize</code></strong><code>(relativePath, readStream)</code> &#8594; <code>Promise</code></p>
+<p>The deserialize function is used to import an exported filestore stream into a folder. The exported filestore
+stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the relative path.</p>
+<p>This function returns a Promise that gets resolved import succeeds.</p>
 </li>
 <li><p><strong><code>watch</code></strong><code>(baseDir, globPattern, eventType, callback)</code></p>
 <p>This function registers watcher functions that get called everytime any of the watched files change.</p>

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>soul-infra / base.script Source: filestore/serialize.js</title>
+	<title>soul-infra / filestore.disk Source: filestore/serialize.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -18,7 +18,7 @@
 <div class="container-fluid">
 	<div class="navbar navbar-fixed-top navbar-inverse">
 		<div class="navbar-inner">
-			<a class="brand" href="index.html">soul-infra / base.script</a>
+			<a class="brand" href="index.html">soul-infra / filestore.disk</a>
 			<ul class="nav">
 				
 				<li class="dropdown">
@@ -183,7 +183,8 @@
  */
 var path = require('path'),
     fstream = require('fstream'),
-    tar = require('tar');
+    tar = require('tar'),
+    zlib = require('zlib');
 /**
  * Returns a serialize function using the config object
  * @param {module:filestore-disk~Config} config - the config object
@@ -195,7 +196,7 @@ module.exports = function (config) {
          * @memberof FileStoreFunctions
          * @function serialize
          * @instance
-         * @description This function serializes any folder specified by the relativePath and creates a tarball stream
+         * @description This function serializes any folder specified by the relativePath and creates a tar.gz stream
          * from it. This stream can be stored or used to copy the folder to another location using
          * {@link FileStoreFunctions#deserialize|deserialize}
          * @param {String} relativePath - the path of the directory to serialize
@@ -209,7 +210,16 @@ module.exports = function (config) {
                     path: path.join(config.baseDir, relativePath),
                     type: 'Directory'
                 }
-            ).pipe(tar.Pack({ noProprietary: true }));
+            ).pipe(tar.Pack(
+                {
+                    noProprietary: true
+                }
+            )).pipe(zlib.createGzip(
+                {
+                    level: 6,
+                    memLevel: 6
+                }
+            ));
         };
     return serialize;
 };
