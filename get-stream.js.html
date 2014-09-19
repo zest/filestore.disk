@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>soul-infra / filestore.disk Index</title>
+	<title>soul-infra / filestore.disk Source: filestore/get-stream.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -162,111 +162,50 @@
 	<div class="row-fluid">
 
 		
-		<div class="span8">
-			
+			<div class="span12">
+				
 				<div id="main">
 					
 
 
-	
-	<span class="page-title">Index</span>
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-    <section class="readme-section">
-        <article><p><a href="https://david-dm.org/soul-infra/filestore.disk#info=dependencies&amp;view=list"><img src="http://img.shields.io/david/soul-infra/filestore.disk.svg?style=flat-square" alt="Dependencies"></a>
-<a href="https://david-dm.org/soul-infra/filestore.disk#info=devDependencies&amp;view=list"><img src="http://img.shields.io/david/dev/soul-infra/filestore.disk.svg?style=flat-square" alt="Dev Dependencies"></a>
-<a href="https://david-dm.org/soul-infra/filestore.disk#info=peerDependencies&amp;view=list"><img src="http://img.shields.io/david/peer/soul-infra/filestore.disk.svg?style=flat-square" alt="Peer Dependencies"></a></p>
-<p><a href="https://codeclimate.com/github/soul-infra/filestore.disk"><img src="http://img.shields.io/codeclimate/github/soul-infra/filestore.disk.svg?style=flat-square" alt="Quality"></a>
-<a href="https://travis-ci.org/soul-infra/filestore.disk"><img src="http://img.shields.io/travis/soul-infra/filestore.disk.svg?style=flat-square" alt="Build Status"></a>
-<a href="https://coveralls.io/r/soul-infra/filestore.disk"><img src="http://img.shields.io/coveralls/soul-infra/filestore.disk.svg?style=flat-square" alt="Coverage Status"></a>
-<a href="http://unlicense.org"><img src="http://img.shields.io/badge/license-UNLICENSE-brightgreen.svg?style=flat-square" alt="License"></a></p>
-<h1>soul-infra / filestore.disk</h1>
-<blockquote>
-<p><a href="https://github.com/soul-infra/base.logger/blob/master/README.md"><img src="http://img.shields.io/badge/base.logger-optional-green.svg?style=flat-round" alt="base.logger"></a>
-<a href="https://github.com/soul-infra/base.resolver/blob/master/README.md#explicit-dependencies"><img src="http://img.shields.io/badge/options-required-orange.svg?style=flat-round" alt="options"></a></p>
-<p>filestore.disk is a filestore component for soul that manages files on disks drives.</p>
-</blockquote>
-<h2>Component Methods</h2>
-<p>The filestore component exposes the below methods for file and directory handling. The parameter names are 
-self-explainatory. For a complete documentation, refer the jsdocs.</p>
-<ol>
-<li><p><strong><code>create</code></strong><code>(relativePath, fileData)</code> &#8594; <code>Promise</code></p>
-<p>The create function creates (or overrides) a file or a directory at the path specified. if the fileData variable is
-passed to the function, a file is created. Otherwise, a directory is created. If the parent path at which the file
-or directory is to be created does not exist, it is also created.</p>
-<p>This function returns a Promise that gets resolved when the file or directory is created.</p>
-</li>
-<li><p><strong><code>link</code></strong><code>(originalPath, linkPath)</code> &#8594; <code>Promise</code></p>
-<p>This function creates a symbolic link at linkPath pointing to the file or directory at original path.</p>
-<p>It returns a Promise that gets resolved when the symbolic link is created.</p>
-</li>
-<li><p><strong><code>read</code></strong><code>(relativePath, encoding)</code> &#8594; <code>Promise</code></p>
-<p>This function reads a file or a directory at a path.</p>
-<p>It returns a Promise that gets resolved with the following:</p>
-<ul>
-<li>an array of object, each representing one of the child items if the read path is a folder or a symlink to a 
-folder.</li>
-<li>The actual read contents if the read path is a file or a symlink to a file.</li>
-</ul>
-</li>
-<li><p><strong><code>getStream</code></strong><code>(relativePath)</code> &#8594; <code>ReadStream</code></p>
-<p>This function creates and returns a readable stream from a file path.</p>
-<p>It returns a readable stream object created from the file.</p>
-</li>
-<li><p><strong><code>find</code></strong><code>(dirPath, globPattern)</code> &#8594; <code>Promise</code></p>
-<p>This function searches a directory for files that match a glob Pattern and returns an array of file metadata for
-all such files.</p>
-<p>It returns a Promise that gets resolved with an array of objects, each representing a matched file.</p>
-</li>
-<li><p><strong><code>rename</code></strong><code>(oldPath, newPath)</code> &#8594; <code>Promise</code></p>
-<p>This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPath does not exist, it
-is created.</p>
-<p>It returns a Promise that gets resolved when the move succeeds.</p>
-</li>
-<li><p><strong><code>remove</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
-<p>This function deletes anything at the given relative path (including its children if the path corresponds to a
-directory)</p>
-<p>It returns a Promise that gets resolved when delete succeeds.</p>
-</li>
-<li><p><strong><code>serialize</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
-<p>This function serializes any folder specified by the relativePath and creates a tar.gz stream from it. This stream
-can be stored or used to copy the folder to another location using deserialize</p>
-<p>It returns a Promise that gets resolved with the read stream when serialization succeeds.</p>
-</li>
-<li><p><strong><code>deserialize</code></strong><code>(relativePath, readStream)</code> &#8594; <code>Promise</code></p>
-<p>The deserialize function is used to import an exported filestore stream into a folder. The exported filestore
-stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the relative path.</p>
-<p>This function returns a Promise that gets resolved import succeeds.</p>
-</li>
-<li><p><strong><code>watch</code></strong><code>(baseDir, globPattern, eventType, callback)</code></p>
-<p>This function registers watcher functions that get called everytime any of the watched files change.</p>
-</li>
-<li><p><strong><code>unwatch</code></strong><code>()</code></p>
-<p>This function removes all file watchers registered by the <code>watch</code> function</p>
-</li>
-</ol></article>
-    </section>
-
-
+		<h1 class="page-title">Source: filestore/get-stream.js</h1>
+    
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript ">'use strict';
+/**
+ * @fileOverview The filestore-disk/get-stream module returns the {@link FileStoreFunctions#getStream} function.
+ * @module filestore-disk/get-stream
+ * @requires {@link external:fs-extra}
+ * @requires {@link external:path}
+ */
+var fs = require('fs-extra'),
+    path = require('path');
+/**
+ * Returns a getStream function using the config object
+ * @param {module:filestore-disk~Config} config - the config object
+ * @returns {FileStoreFunctions#getStream} the getStream function
+ */
+module.exports = function (config) {
+    var logger = config.logger('filestore.disk/get-stream'),
+        /**
+         * @memberof FileStoreFunctions
+         * @function getStream
+         * @instance
+         * @description This function creates and returns a readable stream from a file path.
+         * @param {String} relativePath - the file path to stream
+         * @returns {ReadStream} a readable stream object created from the file
+         */
+        getStream = function (relativePath) {
+            logger.log('creating read stream', relativePath);
+            return fs.createReadStream(path.join(config.baseDir, relativePath));
+        };
+    return getStream;
+};
+</pre>
+	</article>
+</section>
 
 
 
@@ -294,10 +233,6 @@ stream is essentially a tar.gz of a complete folder hierarchy that is extracted 
 				</footer>
 			</div>
 
-			
-			<div class="span3">
-				<div id="toc"></div>
-			</div>
 			
 			<br clear="both">
 		</div>
