@@ -184,7 +184,8 @@
 
     
         
-            <div class="description">The filestore object is returned when filestore gets resolved. This Object has static functions to accessthe store.</div>
+            <div class="description">The filestore object is returned when filestore gets resolved. This Object has static functions to access
+the store.</div>
         
 
         
@@ -258,7 +259,9 @@
     
     
     <div class="description">
-        The create function creates (or overrides) a file or a directory at the path specified. if thefileData variable is passed to the function, a file is created. Otherwise, a directory is created. If theparent path at which the file or directory is to be created does not exist, it is also created.
+        The create function creates (or overrides) a file or a directory at the path specified. if the
+fileData variable is passed to the function, a file is created. Otherwise, a directory is created. If the
+parent path at which the file or directory is to be created does not exist, it is also created.
     </div>
     
 
@@ -454,7 +457,9 @@
     
     
     <div class="description">
-        The deserialize function is used to import an exported filestore stream into a folder. Theexported filestore stream is essentially a tar.gz of a complete folder hierarchy that is extracted at therelative path.
+        The deserialize function is used to import an exported filestore stream into a folder. The
+exported filestore stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the
+relative path.
     </div>
     
 
@@ -631,7 +636,8 @@
     
     
     <div class="description">
-        This function searches a directory for files that match a glob Pattern and returns an array offile metadata for all such files.
+        This function searches a directory for files that match a glob Pattern and returns an array of
+file metadata for all such files.
     </div>
     
 
@@ -767,7 +773,8 @@
     
             
 <div class="param-desc">
-    A promise that gets resolved with an array of<a href="utils.html#Stats">Stats</a> objects, each representing a matched file.
+    A promise that gets resolved with an array of
+<a href="utils.html#Stats">Stats</a> objects, each representing a matched file.
 </div>
 
 
@@ -948,7 +955,8 @@
     
     
     <div class="description">
-        This function creates a symbolic link at linkPath pointing to the file or directory at originalpath
+        This function creates a symbolic link at linkPath pointing to the file or directory at original
+path
     </div>
     
 
@@ -1211,7 +1219,8 @@
 
             
 
-            <td class="description last">the encoding to use. This parameter is ignored if the path to be read is adirectory or a link</td>
+            <td class="description last">the encoding to use. This parameter is ignored if the path to be read is a
+directory or a link</td>
         </tr>
 
 	
@@ -1274,7 +1283,10 @@
     
             
 <div class="param-desc">
-    a promise that gets resolved with the following: <ul><li>an array of <a href="utils.html#Stats">Stats</a> object for all child items if the read path is a folder or a symlink to a folder.</li> <li>The actual read contents if the read path is a file or a symlink to a file.</li>
+    a promise that gets resolved with the following:
+ <ul><li>an array of <a href="utils.html#Stats">Stats</a> object for all child items if the read
+ path is a folder or a symlink to a folder.</li>
+ <li>The actual read contents if the read path is a file or a symlink to a file.</li>
 </div>
 
 
@@ -1308,7 +1320,8 @@
     
     
     <div class="description">
-        This function deletes anything at the given relative path (including its children if the pathcorresponds to a directory)
+        This function deletes anything at the given relative path (including its children if the path
+corresponds to a directory)
     </div>
     
 
@@ -1455,7 +1468,8 @@
     
     
     <div class="description">
-        This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPathdoes not exist, it is created.
+        This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPath
+does not exist, it is created.
     </div>
     
 
@@ -1625,7 +1639,9 @@
     
     
     <div class="description">
-        This function serializes any folder specified by the relativePath and creates a tar.gz streamfrom it. This stream can be stored or used to copy the folder to another location using<a href="FileStoreFunctions.html#deserialize">deserialize</a>
+        This function serializes any folder specified by the relativePath and creates a tar.gz stream
+from it. This stream can be stored or used to copy the folder to another location using
+<a href="FileStoreFunctions.html#deserialize">deserialize</a>
     </div>
     
 
@@ -1779,7 +1795,8 @@
     
     
     <div class="description">
-        This function removes all file watchers registered by the <a href="FileStoreFunctions.html#watch">FileStoreFunctions#watch</a>function
+        This function removes all file watchers registered by the <a href="FileStoreFunctions.html#watch">FileStoreFunctions#watch</a>
+function
     </div>
     
 
@@ -1861,7 +1878,8 @@
     
     
     <div class="description">
-        This function registers watcher functions that get called everytime any of the watched fileschange
+        This function registers watcher functions that get called everytime any of the watched files
+change
     </div>
     
 
@@ -1954,7 +1972,8 @@
 
             
 
-            <td class="description last">the glob pattern is used to filter watched files list in baseDir. If notspecified, all files inside baseDir are watched.</td>
+            <td class="description last">the glob pattern is used to filter watched files list in baseDir. If not
+specified, all files inside baseDir are watched.</td>
         </tr>
 
 	
@@ -1987,7 +2006,9 @@
 
             
 
-            <td class="description last">eventType, if specified, can be <b>create</b> or <b>remove</b> which willrestrict watching only file creations or deletions respectively. If not specified, both creation and deletionwill be watched.</td>
+            <td class="description last">eventType, if specified, can be <b>create</b> or <b>remove</b> which will
+restrict watching only file creations or deletions respectively. If not specified, both creation and deletion
+will be watched.</td>
         </tr>
 
 	
@@ -2018,7 +2039,8 @@
 
             
 
-            <td class="description last">the callback function to be called when a watchedfile is changed, created or removed</td>
+            <td class="description last">the callback function to be called when a watched
+file is changed, created or removed</td>
         </tr>
 
 	
