@@ -1,64 +1,54 @@
 {
-  "name": "filestore.disk",
-  "description": "filestore.disk is a filestore component for soul that manages files on disks",
-  "version": "0.0.1",
-  "main": "./lib/index",
-  "private": true,
-  "scripts": {
-    "coverage": "grunt coverage",
-    "cleanup": "grunt cleanup",
-    "init": "grunt init",
-    "test": "grunt test",
-    "document": "grunt document",
-    "observe": "grunt observe"
-  },
-  "maintainers": [
-    {
-      "name": "Pranav Jha",
-      "email": "jha.pranav.s@gmail.com",
-      "web": "https://github.com/zest"
-    }
-  ],
-  "licenses": [
-    {
-      "type": "unlicense",
-      "url": "http://unlicense.org"
-    }
-  ],
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/zest/filestore.disk.git"
-    }
-  ],
-  "dependencies": {
-    "q": "1.0.1",
-    "fs-extra": "0.11.1",
-    "merge": "1.2.0",
-    "findit": "2.0.0",
-    "minimatch": "1.0.0",
-    "tar": "1.0.1",
-    "fstream": "1.0.2"
-  },
-  "devDependencies": {
-    "grunt": "0.4.5",
-    "chai": "1.9.1",
-    "sinon": "1.10.3",
-    "sinon-chai": "2.5.0",
-    "chai-as-promised": "4.1.1",
-    "base.logger": "zest/base.logger",
-    "base.gruntrunner": "zest/base.gruntrunner"
-  },
-  "directories": {
-    "lib": "lib",
-    "doc": "doc",
-    "test": "test",
-    "out": ".out"
-  },
-  "config": {
-    "blanket": {
-      "pattern": "//^(?!.*/node_modules/).*/lib/"
-    }
-  },
-  "soul-component": "filestore"
+    "name": "filestore.disk",
+    "description": "filestore.disk is a filestore component for soul that manages files on disks",
+    "version": "0.0.1",
+    "main": "./lib/index",
+    "private": true,
+    "scripts": {
+        "test": "./node_modules/.bin/grunt test"
+    },
+    "license": "Unlicense",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zest/filestore.disk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/zest/filestore.disk/issues"
+    },
+    "maintainers": [
+        {
+            "name": "Pranav Jha",
+            "email": "jha.pranav.s@gmail.com",
+            "web": "http://about.me/pranavjha"
+        }
+    ],
+    "dependencies": {
+        "q": "1.0.1",
+        "fs-extra": "0.11.1",
+        "merge": "1.2.0",
+        "findit": "2.0.0",
+        "minimatch": "1.0.0",
+        "tar": "1.0.1",
+        "fstream": "1.0.2"
+    },
+    "devDependencies": {
+        "grunt": "0.4.5",
+        "grunt-cli": "0.1.13",
+        "chai": "1.9.1",
+        "sinon": "1.10.3",
+        "sinon-chai": "2.5.0",
+        "chai-as-promised": "4.1.1",
+        "base.logger": "zest/base.logger",
+        "base.gruntrunner": "zest/base.gruntrunner"
+    },
+    "directories": {
+        "lib": "lib",
+        "test": "test"
+    },
+    "config": {
+        "blanket": {
+            "pattern": "//^(?!.*/node_modules/).*/lib/"
+        }
+    },
+    "soul-component": "filestore"
 }
