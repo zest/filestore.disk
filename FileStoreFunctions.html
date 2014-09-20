@@ -38,7 +38,8 @@
     
     
         
-            <div class="description">The filestore object is returned when filestore gets resolved. This Object has static functions to accessthe store.</div>
+            <div class="description"><p>The filestore object is returned when filestore gets resolved. This Object has static functions to access
+the store.</p></div>
         
         
         
@@ -106,7 +107,9 @@
     
     
     <div class="description">
-        The create function creates (or overrides) a file or a directory at the path specified. if thefileData variable is passed to the function, a file is created. Otherwise, a directory is created. If theparent path at which the file or directory is to be created does not exist, it is also created.
+        <p>The create function creates (or overrides) a file or a directory at the path specified. if the
+fileData variable is passed to the function, a file is created. Otherwise, a directory is created. If the
+parent path at which the file or directory is to be created does not exist, it is also created.</p>
     </div>
     
 
@@ -166,7 +169,7 @@
             
             
             
-            <td class="description last">the path at which the file or directory has to be created</td>
+            <td class="description last"><p>the path at which the file or directory has to be created</p></td>
         </tr>
 	
 	
@@ -205,7 +208,7 @@
             
             
             
-            <td class="description last">the file data to be used</td>
+            <td class="description last"><p>the file data to be used</p></td>
         </tr>
 	
 	
@@ -261,7 +264,7 @@
     
             
 <div class="param-desc">
-    A promise that gets resolved when the file or directory is created
+    <p>A promise that gets resolved when the file or directory is created</p>
 </div>
 
 
@@ -294,7 +297,9 @@
     
     
     <div class="description">
-        The deserialize function is used to import an exported filestore stream into a folder. Theexported filestore stream is essentially a tar.gz of a complete folder hierarchy that is extracted at therelative path.
+        <p>The deserialize function is used to import an exported filestore stream into a folder. The
+exported filestore stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the
+relative path.</p>
     </div>
     
 
@@ -344,7 +349,7 @@
             
             
             
-            <td class="description last">the directory path at which the serialized output is to be deserialized</td>
+            <td class="description last"><p>the directory path at which the serialized output is to be deserialized</p></td>
         </tr>
 	
 	
@@ -367,7 +372,7 @@
             
             
             
-            <td class="description last">the readable stream which is to be deserialized</td>
+            <td class="description last"><p>the readable stream which is to be deserialized</p></td>
         </tr>
 	
 	
@@ -430,7 +435,7 @@
     
             
 <div class="param-desc">
-    A promise that gets resolved import succeeds
+    <p>A promise that gets resolved import succeeds</p>
 </div>
 
 
@@ -463,7 +468,8 @@
     
     
     <div class="description">
-        This function searches a directory for files that match a glob Pattern and returns an array offile metadata for all such files.
+        <p>This function searches a directory for files that match a glob Pattern and returns an array of
+file metadata for all such files.</p>
     </div>
     
 
@@ -513,7 +519,7 @@
             
             
             
-            <td class="description last">the directory path to search</td>
+            <td class="description last"><p>the directory path to search</p></td>
         </tr>
 	
 	
@@ -536,7 +542,7 @@
             
             
             
-            <td class="description last"><a href="https://github.com/isaacs/minimatch">glob</a> pattern to use for searching</td>
+            <td class="description last"><p><a href="https://github.com/isaacs/minimatch">glob</a> pattern to use for searching</p></td>
         </tr>
 	
 	
@@ -592,7 +598,8 @@
     
             
 <div class="param-desc">
-    A promise that gets resolved with an array of<a href="utils.html#Stats">Stats</a> objects, each representing a matched file.
+    <p>A promise that gets resolved with an array of
+<a href="utils.html#Stats">Stats</a> objects, each representing a matched file.</p>
 </div>
 
 
@@ -625,7 +632,7 @@
     
     
     <div class="description">
-        This function creates and returns a readable stream from a file path.
+        <p>This function creates and returns a readable stream from a file path.</p>
     </div>
     
 
@@ -675,7 +682,7 @@
             
             
             
-            <td class="description last">the file path to stream</td>
+            <td class="description last"><p>the file path to stream</p></td>
         </tr>
 	
 	
@@ -731,7 +738,7 @@
     
             
 <div class="param-desc">
-    a readable stream object created from the file
+    <p>a readable stream object created from the file</p>
 </div>
 
 
@@ -764,7 +771,8 @@
     
     
     <div class="description">
-        This function creates a symbolic link at linkPath pointing to the file or directory at originalpath
+        <p>This function creates a symbolic link at linkPath pointing to the file or directory at original
+path</p>
     </div>
     
 
@@ -814,7 +822,7 @@
             
             
             
-            <td class="description last">the actual path to link</td>
+            <td class="description last"><p>the actual path to link</p></td>
         </tr>
 	
 	
@@ -837,7 +845,7 @@
             
             
             
-            <td class="description last">the location where the new link should be created</td>
+            <td class="description last"><p>the location where the new link should be created</p></td>
         </tr>
 	
 	
@@ -893,7 +901,7 @@
     
             
 <div class="param-desc">
-    a promise that gets resolved when the symbolic link is created
+    <p>a promise that gets resolved when the symbolic link is created</p>
 </div>
 
 
@@ -926,7 +934,7 @@
     
     
     <div class="description">
-        This function reads a file or a directory at a path.
+        <p>This function reads a file or a directory at a path.</p>
     </div>
     
 
@@ -986,7 +994,7 @@
             
             
             
-            <td class="description last">the actual path of the file or directory to read</td>
+            <td class="description last"><p>the actual path of the file or directory to read</p></td>
         </tr>
 	
 	
@@ -1019,7 +1027,8 @@
             
             
             
-            <td class="description last">the encoding to use. This parameter is ignored if the path to be read is adirectory or a link</td>
+            <td class="description last"><p>the encoding to use. This parameter is ignored if the path to be read is a
+directory or a link</p></td>
         </tr>
 	
 	
@@ -1075,7 +1084,12 @@
     
             
 <div class="param-desc">
-    a promise that gets resolved with the following: <ul><li>an array of <a href="utils.html#Stats">Stats</a> object for all child items if the read path is a folder or a symlink to a folder.</li> <li>The actual read contents if the read path is a file or a symlink to a file.</li>
+    <p>a promise that gets resolved with the following:</p>
+<ul>
+<li>an array of <a href="utils.html#Stats">Stats</a> object for all child items if the read
+path is a folder or a symlink to a folder.</li>
+<li>The actual read contents if the read path is a file or a symlink to a file.</li>
+</ul>
 </div>
 
 
@@ -1108,7 +1122,8 @@
     
     
     <div class="description">
-        This function deletes anything at the given relative path (including its children if the pathcorresponds to a directory)
+        <p>This function deletes anything at the given relative path (including its children if the path
+corresponds to a directory)</p>
     </div>
     
 
@@ -1158,7 +1173,7 @@
             
             
             
-            <td class="description last">the actual path of the file or directory to delete</td>
+            <td class="description last"><p>the actual path of the file or directory to delete</p></td>
         </tr>
 	
 	
@@ -1214,7 +1229,7 @@
     
             
 <div class="param-desc">
-    a promise that gets resolved when delete succeeds.
+    <p>a promise that gets resolved when delete succeeds.</p>
 </div>
 
 
@@ -1247,7 +1262,8 @@
     
     
     <div class="description">
-        This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPathdoes not exist, it is created.
+        <p>This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPath
+does not exist, it is created.</p>
     </div>
     
 
@@ -1297,7 +1313,7 @@
             
             
             
-            <td class="description last">the actual path of the file or directory to move</td>
+            <td class="description last"><p>the actual path of the file or directory to move</p></td>
         </tr>
 	
 	
@@ -1320,7 +1336,7 @@
             
             
             
-            <td class="description last">the new path where the file or directory is to be moved</td>
+            <td class="description last"><p>the new path where the file or directory is to be moved</p></td>
         </tr>
 	
 	
@@ -1376,7 +1392,7 @@
     
             
 <div class="param-desc">
-    a promise that gets resolved when move succeeds.
+    <p>a promise that gets resolved when move succeeds.</p>
 </div>
 
 
@@ -1409,7 +1425,9 @@
     
     
     <div class="description">
-        This function serializes any folder specified by the relativePath and creates a tar.gz streamfrom it. This stream can be stored or used to copy the folder to another location using<a href="FileStoreFunctions.html#deserialize">deserialize</a>
+        <p>This function serializes any folder specified by the relativePath and creates a tar.gz stream
+from it. This stream can be stored or used to copy the folder to another location using
+<a href="FileStoreFunctions.html#deserialize">deserialize</a></p>
     </div>
     
 
@@ -1459,7 +1477,7 @@
             
             
             
-            <td class="description last">the path of the directory to serialize</td>
+            <td class="description last"><p>the path of the directory to serialize</p></td>
         </tr>
 	
 	
@@ -1522,7 +1540,7 @@
     
             
 <div class="param-desc">
-    a promise that gets resolved with the read stream when serialization succeeds.
+    <p>a promise that gets resolved with the read stream when serialization succeeds.</p>
 </div>
 
 
@@ -1555,7 +1573,8 @@
     
     
     <div class="description">
-        This function removes all file watchers registered by the <a href="FileStoreFunctions.html#watch">FileStoreFunctions#watch</a>function
+        <p>This function removes all file watchers registered by the <a href="FileStoreFunctions.html#watch">FileStoreFunctions#watch</a>
+function</p>
     </div>
     
 
@@ -1631,7 +1650,8 @@
     
     
     <div class="description">
-        This function registers watcher functions that get called everytime any of the watched fileschange
+        <p>This function registers watcher functions that get called everytime any of the watched files
+change</p>
     </div>
     
 
@@ -1691,7 +1711,7 @@
             
             
             
-            <td class="description last">The basedir to watch for file additions and deletions</td>
+            <td class="description last"><p>The basedir to watch for file additions and deletions</p></td>
         </tr>
 	
 	
@@ -1724,7 +1744,8 @@
             
             
             
-            <td class="description last">the glob pattern is used to filter watched files list in baseDir. If notspecified, all files inside baseDir are watched.</td>
+            <td class="description last"><p>the glob pattern is used to filter watched files list in baseDir. If not
+specified, all files inside baseDir are watched.</p></td>
         </tr>
 	
 	
@@ -1757,7 +1778,9 @@
             
             
             
-            <td class="description last">eventType, if specified, can be <b>create</b> or <b>remove</b> which willrestrict watching only file creations or deletions respectively. If not specified, both creation and deletionwill be watched.</td>
+            <td class="description last"><p>eventType, if specified, can be <strong><code>create</code></strong> or <strong><code>remove</code></strong> which will
+restrict watching only file creations or deletions respectively. If not specified, both creation and deletion
+will be watched.</p></td>
         </tr>
 	
 	
@@ -1788,7 +1811,8 @@
             
             
             
-            <td class="description last">the callback function to be called when a watchedfile is changed, created or removed</td>
+            <td class="description last"><p>the callback function to be called when a watched
+file is changed, created or removed</p></td>
         </tr>
 	
 	
@@ -1873,7 +1897,7 @@
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Sep 20 2014 14:54:06 GMT+0530 (IST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Sep 20 2014 21:54:28 GMT-0000 (UTC)
 </footer>
 
 <script> prettyPrint(); </script>
