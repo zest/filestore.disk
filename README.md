@@ -10,10 +10,10 @@
 
 # zest / filestore.disk
 
-> [![base.logger][soul-base-logger-optional-image]][soul-base-logger-optional-link]
-> [![options][soul-option-required-image]][soul-option-required-link]
+> [![base.logger][zest-base-logger-optional-image]][zest-base-logger-optional-link]
+> [![options][zest-option-required-image]][zest-option-required-link]
 >
-> filestore.disk is a filestore component for soul that manages files on disks drives.
+> filestore.disk is a filestore component for zest that manages files on disks drives.
 
 
 ## Component Methods
@@ -108,7 +108,7 @@ self-explainatory. For a complete documentation, refer the jsdocs.
 [build-status-link]: https://travis-ci.org/zest/filestore.disk
 [coverage-status-image]: http://img.shields.io/coveralls/zest/filestore.disk.svg?style=flat-square
 [coverage-status-link]: https://coveralls.io/r/zest/filestore.disk
-[soul-base-logger-optional-image]: http://img.shields.io/badge/base.logger-optional-green.svg?style=flat-round
-[soul-base-logger-optional-link]: https://github.com/zest/base.logger/blob/master/README.md
-[soul-option-required-image]: http://img.shields.io/badge/options-required-orange.svg?style=flat-round
-[soul-option-required-link]: https://github.com/zest/base.resolver/blob/master/README.md#explicit-dependencies
+[zest-base-logger-optional-image]: http://img.shields.io/badge/base.logger-optional-green.svg?style=flat-round
+[zest-base-logger-optional-link]: https://github.com/zest/base.logger/blob/master/README.md
+[zest-option-required-image]: http://img.shields.io/badge/options-required-orange.svg?style=flat-round
+[zest-option-required-link]: https://github.com/zest/base.resolver/blob/master/README.md#explicit-dependencies

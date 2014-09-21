@@ -1,6 +1,6 @@
 {
     "name": "filestore.disk",
-    "description": "filestore.disk is a filestore component for soul that manages files on disks",
+    "description": "filestore.disk is a filestore component for zest that manages files on disks",
     "version": "0.0.1",
     "main": "./lib/index",
     "private": true,
@@ -50,5 +50,5 @@
             "pattern": "//^(?!.*/node_modules/).*/lib/"
         }
     },
-    "soul-component": "filestore"
+    "zest-component": "filestore"
 }
