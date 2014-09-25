@@ -42,7 +42,7 @@ var fs = require('fs-extra'),
  * @returns {FileStoreFunctions#remove} the remove function
  */
 module.exports = function (config) {
-    var logger = config.logger('filestore.disk/remove'),
+    var logger = config.logger.group('remove'),
         /**
          * @memberof FileStoreFunctions
          * @function remove
@@ -53,7 +53,7 @@ module.exports = function (config) {
          * @returns {external:q} a promise that gets resolved when delete succeeds.
          */
         remove = function (relativePath) {
-            logger.log('deleting', relativePath);
+            logger.debug('deleting', relativePath);
             return q.denodeify(fs.remove)(
                 path.join(config.baseDir, relativePath)
             ).then(

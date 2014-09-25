@@ -38,7 +38,7 @@ var path = require('path');
  * @returns {FileStoreFunctions#watch} the watch function
  */
 module.exports = function (config) {
-    var logger = config.logger('filestore.disk/watch'),
+    var logger = config.logger.group('watch'),
         /**
          * @memberof FileStoreFunctions
          * @function
@@ -75,8 +75,8 @@ module.exports = function (config) {
             }
             eventType.split(',').forEach(function (thisEvent) {
                 config.fileEvent.on(thisEvent, function (filePath) {
-                    logger.log(thisEvent, 'captured on', filePath);
-                    logger.log('matching with pattern', globPattern);
+                    logger.debug(thisEvent, 'captured on', filePath);
+                    logger.debug('matching with pattern', globPattern);
                     if (minimatch(path.relative(baseDir, filePath), globPattern)) {
                         callback(filePath, thisEvent);
                     }

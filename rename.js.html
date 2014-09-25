@@ -44,7 +44,7 @@ var fs = require('fs-extra'),
  * @returns {FileStoreFunctions#rename} the rename function
  */
 module.exports = function (config) {
-    var logger = config.logger('filestore.disk/rename'),
+    var logger = config.logger.group('rename'),
         /**
          * @memberof FileStoreFunctions
          * @function rename
@@ -56,7 +56,7 @@ module.exports = function (config) {
          * @returns {external:q} a promise that gets resolved when move succeeds.
          */
         rename = function (oldPath, newPath) {
-            logger.log('renaming', oldPath, 'to', newPath);
+            logger.debug('renaming', oldPath, 'to', newPath);
             return require('./create')(config)(
                 path.dirname(newPath)
             ).then(
@@ -73,9 +73,9 @@ module.exports = function (config) {
                             if (stats.type !== 'F') {
                                 return;
                             }
-                            logger.log('emitting remove for', oldPath);
+                            logger.debug('emitting remove for', oldPath);
                             config.fileEvent.emit('remove', oldPath);
-                            logger.log('emitting create for', newPath);
+                            logger.debug('emitting create for', newPath);
                             config.fileEvent.emit('create', newPath);
                         });
                     });

@@ -40,7 +40,7 @@ var fs = require('fs-extra'),
  * @returns {FileStoreFunctions#getStream} the getStream function
  */
 module.exports = function (config) {
-    var logger = config.logger('filestore.disk/get-stream'),
+    var logger = config.logger.group('get-stream'),
         /**
          * @memberof FileStoreFunctions
          * @function getStream
@@ -50,7 +50,7 @@ module.exports = function (config) {
          * @returns {ReadStream} a readable stream object created from the file
          */
         getStream = function (relativePath) {
-            logger.log('creating read stream', relativePath);
+            logger.debug('creating read stream', relativePath);
             return fs.createReadStream(path.join(config.baseDir, relativePath));
         };
     return getStream;

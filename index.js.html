@@ -45,9 +45,7 @@ module.exports = [
     function (logger, options) {
         var config = merge({
             fileEvent: new (require('events').EventEmitter)(),
-            logger: logger || function () {
-                return console;
-            }
+            logger: (logger || require('base.logger')('filestore.disk'))
         }, options);
         // create a function map and return it
         return {

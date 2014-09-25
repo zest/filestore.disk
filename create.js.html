@@ -44,7 +44,7 @@ var fs = require('fs-extra'),
  * @returns {FileStoreFunctions#create} the create function
  */
 module.exports = function (config) {
-    var logger = config.logger('filestore.disk/create'),
+    var logger = config.logger.group('create'),
         /**
          * @memberof FileStoreFunctions
          * @function create
@@ -59,14 +59,14 @@ module.exports = function (config) {
         create = function (relativePath, fileData) {
             if (arguments.length === 1) {
                 // if fileData is not present, we create a directory
-                logger.log('creating directory', relativePath);
+                logger.debug('creating directory', relativePath);
                 return q.denodeify(fs.ensureDir)(
                     path.join(config.baseDir, relativePath)
                 );
             }
             if (fileData instanceof stream.Readable) {
                 // if fileData is a readable stream, we write it to a file at the path
-                logger.log('creating file from stream:', relativePath);
+                logger.debug('creating file from stream:', relativePath);
                 return create(
                     path.dirname(relativePath)
                 ).then(
@@ -85,7 +85,7 @@ module.exports = function (config) {
                 );
             }
             // if fileData is a Buffer ot a string, we directly output it into the file
-            logger.log('creating file from data:', relativePath);
+            logger.debug('creating file from data:', relativePath);
             return q.denodeify(fs.outputFile)(
                 path.join(config.baseDir, relativePath),
                 fileData
@@ -93,7 +93,7 @@ module.exports = function (config) {
                 function () {
                     // finally, emit the create event asynchronously
                     process.nextTick(function () {
-                        logger.log('emitting create event for', relativePath);
+                        logger.debug('emitting create event for', relativePath);
                         config.fileEvent.emit('create', relativePath);
                     });
                     return fileData;

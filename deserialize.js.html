@@ -43,7 +43,7 @@ var path = require('path'),
  * @returns {FileStoreFunctions#deserialize} the deserialize function
  */
 module.exports = function (config) {
-    var logger = config.logger('filestore.disk/deserialize'),
+    var logger = config.logger.group('deserialize'),
         /**
          * @memberof FileStoreFunctions
          * @function deserialize
@@ -80,7 +80,7 @@ module.exports = function (config) {
             ).on(
                 'end',
                 function () {
-                    logger.log('successfully deserialized');
+                    logger.debug('successfully deserialized');
                     return deferred.resolve();
                 }
             );

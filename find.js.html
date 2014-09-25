@@ -42,7 +42,7 @@ var path = require('path'),
  * @returns {FileStoreFunctions#find} the find function
  */
 module.exports = function (config) {
-    var logger = config.logger('filestore.disk/find'),
+    var logger = config.logger.group('find'),
         /**
          * @memberof FileStoreFunctions
          * @function find
@@ -60,12 +60,12 @@ module.exports = function (config) {
                 minimatch = require('minimatch'),
                 findPath = path.join(config.baseDir, dirPath),
                 finder = require('findit')(findPath);
-            logger.log('reading files at', dirPath, 'with pattern', globPattern);
+            logger.debug('reading files at', dirPath, 'with pattern', globPattern);
             finder.on('path', function (filePath, stat) {
                 var relativepath = path.relative(findPath, filePath);
-                logger.log('matching ', relativepath, 'with pattern', globPattern);
+                logger.debug('matching ', relativepath, 'with pattern', globPattern);
                 if (minimatch(relativepath, globPattern)) {
-                    logger.log('\tmatch!');
+                    logger.debug('\tmatch!');
                     fileList.push(utils.normalizeStats(stat, path.join(dirPath, relativepath)));
                 }
             });
