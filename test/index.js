@@ -1,6 +1,6 @@
 'use strict';
 // silence the logger
-require('base.logger').configure([]);
+// require('base.logger').stop();
 var fs = require('fs-extra'),
     path = require('path'),
     q = require('q'),
@@ -13,7 +13,7 @@ chai.use(require('sinon-chai'));
 // long stack for q
 require('q').longStackSupport = true;
 var disk = require('../lib').slice(-1)[0](
-    require('base.logger'),
+    require('base.logger')(''),
     {
         baseDir: outDir
     }
