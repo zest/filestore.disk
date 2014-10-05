@@ -59,6 +59,14 @@ describe(
                     function (data) {
                         expect(data.length).to.equal(8);
                     }
+                ).then(
+                    function () {
+                        return disk.find('folder-unpack', '*.txt');
+                    }
+                ).then(
+                    function (data) {
+                        expect(data.length).to.equal(2);
+                    }
                 );
             }
         );
