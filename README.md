@@ -29,69 +29,106 @@ self-explainatory. For a complete documentation, refer the jsdocs.
     
     This function returns a Promise that gets resolved when the file or directory is created.
 
- 2. **`link`**`(originalPath, linkPath)` &#8594; `Promise`
+ 2. **`duplicate`**`(originalPath, linkPath, action)` &#8594; `Promise`
 
-    This function creates a symbolic link at linkPath pointing to the file or directory at original path.
+    This function duplicates the file or folder at oldPath to the newPath. It copies, creates symlinks or moves the 
+    file / folder to the new path depending on the parameter passed. If the newPath does not exist, it is created.
     
-    It returns a Promise that gets resolved when the symbolic link is created.
+    Action specifies the nature of duplication. It can take the following values
+    
+      - `L` if a symlink is to be created at the new path
+      - `M` if the contents at the old path are to be moved to new path
+      - `C` if the contents at the old path are to be copied to the new path
+   
+    This function returns a promise that gets resolved when duplication succeeds.
 
- 3. **`read`**`(relativePath, encoding)` &#8594; `Promise`
+ 3. **`read`**`(relativePath)` &#8594; `Promise`
 
     This function reads a file or a directory at a path.
     
     It returns a Promise that gets resolved with the following:
       - an array of object, each representing one of the child items if the read path is a folder or a symlink to a 
         folder.
-      - The actual read contents if the read path is a file or a symlink to a file.
+      - The actual read stream if the read path is a file or a symlink to a file.
 
- 4. **`getStream`**`(relativePath)` &#8594; `ReadStream`
-
-    This function creates and returns a readable stream from a file path.
-    
-    It returns a readable stream object created from the file.
-
- 5. **`find`**`(dirPath, globPattern)` &#8594; `Promise`
+ 4. **`find`**`(dirPath, globPattern)` &#8594; `Promise`
 
     This function searches a directory for files that match a glob Pattern and returns an array of file metadata for
     all such files.
     
     It returns a Promise that gets resolved with an array of objects, each representing a matched file.
 
- 6. **`rename`**`(oldPath, newPath)` &#8594; `Promise`
-
-    This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPath does not exist, it
-    is created.
-    
-    It returns a Promise that gets resolved when the move succeeds.
-
- 7. **`remove`**`(relativePath)` &#8594; `Promise`
+ 5. **`remove`**`(relativePath)` &#8594; `Promise`
 
     This function deletes anything at the given relative path (including its children if the path corresponds to a
     directory)
     
     It returns a Promise that gets resolved when delete succeeds.
 
- 8. **`serialize`**`(relativePath)` &#8594; `Promise`
+ 6. **`pack`**`(relativePath)` &#8594; `Promise`
 
-    This function serializes any folder specified by the relativePath and creates a tar.gz stream from it. This stream
-    can be stored or used to copy the folder to another location using deserialize
+    This function packs any folder specified by the relativePath and creates a tar.gz stream from it. This stream
+    can be stored or used to copy the folder to another location using unpack
     
     It returns a Promise that gets resolved with the read stream when serialization succeeds.
 
- 9. **`deserialize`**`(relativePath, readStream)` &#8594; `Promise`
+ 7. **`unpack`**`(relativePath, readStream)` &#8594; `Promise`
 
-    The deserialize function is used to import an exported filestore stream into a folder. The exported filestore
+    The unpack function is used to import an exported filestore stream into a folder. The exported filestore
     stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the relative path.
     
     This function returns a Promise that gets resolved import succeeds.
 
- 10. **`watch`**`(baseDir, globPattern, eventType, callback)`
+ 8. **`watch`**`(baseDir, globPattern, eventType, callback)`
 
     This function registers watcher functions that get called everytime any of the watched files change.
 
- 11. **`unwatch`**`()`
+ 9. **`unwatch`**`()`
 
     This function removes all file watchers registered by the `watch` function
+
+ 10. **`router`**
+
+    This is an express router to expose all filestore functions. This router exposes the below REST apis for handling 
+    the filestore
+    
+     1. `GET` apis are used to fetch files. It can be used with the below parameters
+     
+          1. `<<relative/path/to/base/folder/>>?find=<<glob pattern>>` to find the files matching a glob pattern in a
+             folder. Responds with a JSON array of {@link module:filestore-disk/utils~Stats} for each file.
+     
+          2. `<<relative/path/to/base/folder/>>?pack=true` to export a folder into a `tar.gz` file and download it.
+     
+          3. `<<relative/path/to/base/folder/or/file>>` to stream a file or get the list of files in a folder. Responds
+              with the file contents or Responds with a JSON array of {@link module:filestore-disk/utils~Stats} for each
+              file in case the path corresponds to a folder.
+     
+     2. `PUT` apis are used to create files and folders
+     
+          1. `<<relative/path/to/base/folder/>>?unpack=true` to import a tar.gz stream sent through the request body
+              into the specified folder. Responds with `200 OK` when successful.
+     
+          2. `<<relative/path/to/base/folder/>>?directory=true` to create a directory at the relative path. Responds
+              with `200 OK` when successful.
+     
+          3. `<<relative/path/to/file>>` to create a file with request body as contents. Responds with `200 OK` when
+              successful.
+     
+     3. `POST`
+     
+          1. `<<relative/path/to/base/folder/>>?link=<<new/relative/path>>` to create a symlink for the path at the
+              new path. Responds with `200 OK` when successful.
+     
+          2. `<<relative/path/to/base/folder/>>?move=<<new/relative/path>>` to move the contents at the path to the
+              new path. Responds with `200 OK` when successful.
+     
+          3. `<<relative/path/to/base/folder/>>?copy=<<new/relative/path>>` to copy the contents at the path to the
+              new path. Responds with `200 OK` when successful.
+     
+     4. `DELETE`
+     
+          1. `<<relative/path/to/base/folder/or/file>>` to delete the folder or file at the path. Responds with
+              `200 OK` when successful.
 
 
 [dependencies-image]: http://img.shields.io/david/zest/filestore.disk.svg?style=flat-square

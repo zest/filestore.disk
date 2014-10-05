@@ -29,6 +29,8 @@
         "findit": "2.0.0",
         "minimatch": "1.0.0",
         "tar": "1.0.1",
+        "express": "4.9.5",
+        "mime-types": "2.0.2",
         "fstream": "1.0.2"
     },
     "devDependencies": {
@@ -38,6 +40,7 @@
         "sinon": "1.10.3",
         "sinon-chai": "2.5.0",
         "chai-as-promised": "4.1.1",
+        "supertest": "*",
         "base.logger": "zest/base.logger",
         "base.gruntrunner": "zest/base.gruntrunner"
     },
