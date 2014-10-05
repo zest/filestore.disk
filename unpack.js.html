@@ -57,7 +57,7 @@ module.exports = function (config) {
          * @see FileStoreFunctions#pack
          */
         unpack = function (relativePath, readStream) {
-            logger.error('deserializing stream into', relativePath);
+            logger.info('deserializing stream into', relativePath);
             var deferred = q.defer(),
                 errorHandler = function (error) {
                     logger.error('unzipping failed with error');
@@ -70,18 +70,33 @@ module.exports = function (config) {
             ).pipe(zlib.createGunzip()).on(
                 'error',
                 errorHandler
-            ).pipe(tar.Extract(
-                {
-                    path: path.join(config.baseDir, relativePath)
-                }
-            )).on(
+            ).pipe(
+                tar.Extract(
+                    {
+                        path: path.join(config.baseDir, '.tmp')
+                    }
+                )
+            ).on(
                 'error',
                 errorHandler
             ).on(
                 'end',
                 function () {
                     logger.debug('successfully unpacked');
-                    return deferred.resolve();
+                    return require('./read')(config)('.tmp').then(
+                        function (data) {
+                            var duplicate = require('./duplicate')(config);
+                            return duplicate(data[0].path, relativePath, duplicate.move);
+                        }
+                    ).then(
+                        function () {
+                            return require('./remove')(config)('.tmp');
+                        }
+                    ).then(
+                        function () {
+                            return deferred.resolve();
+                        }
+                    ).catch(errorHandler);
                 }
             );
             return deferred.promise;

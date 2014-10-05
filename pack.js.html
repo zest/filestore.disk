@@ -36,7 +36,8 @@
 var path = require('path'),
     fstream = require('fstream'),
     tar = require('tar'),
-    zlib = require('zlib');
+    zlib = require('zlib'),
+    q = require('q');
 /**
  * Returns a pack function using the config object
  * @param {module:filestore-disk~Config} config - the config object
@@ -57,21 +58,27 @@ module.exports = function (config) {
          */
         pack = function (relativePath) {
             logger.debug('serializing', relativePath);
-            return fstream.Reader(
-                {
-                    path: path.join(config.baseDir, relativePath),
-                    type: 'Directory'
-                }
-            ).pipe(tar.Pack(
-                {
-                    noProprietary: true
-                }
-            )).pipe(zlib.createGzip(
-                {
-                    level: 6,
-                    memLevel: 6
-                }
-            ));
+            return q(
+                fstream.Reader(
+                    {
+                        path: path.join(config.baseDir, relativePath),
+                        type: 'Directory'
+                    }
+                ).pipe(
+                    tar.Pack(
+                        {
+                            noProprietary: true
+                        }
+                    )
+                ).pipe(
+                    zlib.createGzip(
+                        {
+                            level: 6,
+                            memLevel: 6
+                        }
+                    )
+                )
+            );
         };
     return pack;
 };
