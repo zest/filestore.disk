@@ -64,45 +64,43 @@ passed to the function, a file is created. Otherwise, a directory is created. If
 or directory is to be created does not exist, it is also created.</p>
 <p>This function returns a Promise that gets resolved when the file or directory is created.</p>
 </li>
-<li><p><strong><code>link</code></strong><code>(originalPath, linkPath)</code> &#8594; <code>Promise</code></p>
-<p>This function creates a symbolic link at linkPath pointing to the file or directory at original path.</p>
-<p>It returns a Promise that gets resolved when the symbolic link is created.</p>
+<li><p><strong><code>duplicate</code></strong><code>(originalPath, linkPath, action)</code> &#8594; <code>Promise</code></p>
+<p>This function duplicates the file or folder at oldPath to the newPath. It copies, creates symlinks or moves the 
+file / folder to the new path depending on the parameter passed. If the newPath does not exist, it is created.</p>
+<p>Action specifies the nature of duplication. It can take the following values</p>
+<ul>
+<li><code>L</code> if a symlink is to be created at the new path</li>
+<li><code>M</code> if the contents at the old path are to be moved to new path</li>
+<li><code>C</code> if the contents at the old path are to be copied to the new path</li>
+</ul>
+<p>This function returns a promise that gets resolved when duplication succeeds.</p>
 </li>
-<li><p><strong><code>read</code></strong><code>(relativePath, encoding)</code> &#8594; <code>Promise</code></p>
+<li><p><strong><code>read</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
 <p>This function reads a file or a directory at a path.</p>
 <p>It returns a Promise that gets resolved with the following:</p>
 <ul>
 <li>an array of object, each representing one of the child items if the read path is a folder or a symlink to a 
 folder.</li>
-<li>The actual read contents if the read path is a file or a symlink to a file.</li>
+<li>The actual read stream if the read path is a file or a symlink to a file.</li>
 </ul>
-</li>
-<li><p><strong><code>getStream</code></strong><code>(relativePath)</code> &#8594; <code>ReadStream</code></p>
-<p>This function creates and returns a readable stream from a file path.</p>
-<p>It returns a readable stream object created from the file.</p>
 </li>
 <li><p><strong><code>find</code></strong><code>(dirPath, globPattern)</code> &#8594; <code>Promise</code></p>
 <p>This function searches a directory for files that match a glob Pattern and returns an array of file metadata for
 all such files.</p>
 <p>It returns a Promise that gets resolved with an array of objects, each representing a matched file.</p>
 </li>
-<li><p><strong><code>rename</code></strong><code>(oldPath, newPath)</code> &#8594; <code>Promise</code></p>
-<p>This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPath does not exist, it
-is created.</p>
-<p>It returns a Promise that gets resolved when the move succeeds.</p>
-</li>
 <li><p><strong><code>remove</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
 <p>This function deletes anything at the given relative path (including its children if the path corresponds to a
 directory)</p>
 <p>It returns a Promise that gets resolved when delete succeeds.</p>
 </li>
-<li><p><strong><code>serialize</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
-<p>This function serializes any folder specified by the relativePath and creates a tar.gz stream from it. This stream
-can be stored or used to copy the folder to another location using deserialize</p>
+<li><p><strong><code>pack</code></strong><code>(relativePath)</code> &#8594; <code>Promise</code></p>
+<p>This function packs any folder specified by the relativePath and creates a tar.gz stream from it. This stream
+can be stored or used to copy the folder to another location using unpack</p>
 <p>It returns a Promise that gets resolved with the read stream when serialization succeeds.</p>
 </li>
-<li><p><strong><code>deserialize</code></strong><code>(relativePath, readStream)</code> &#8594; <code>Promise</code></p>
-<p>The deserialize function is used to import an exported filestore stream into a folder. The exported filestore
+<li><p><strong><code>unpack</code></strong><code>(relativePath, readStream)</code> &#8594; <code>Promise</code></p>
+<p>The unpack function is used to import an exported filestore stream into a folder. The exported filestore
 stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the relative path.</p>
 <p>This function returns a Promise that gets resolved import succeeds.</p>
 </li>
@@ -111,6 +109,57 @@ stream is essentially a tar.gz of a complete folder hierarchy that is extracted 
 </li>
 <li><p><strong><code>unwatch</code></strong><code>()</code></p>
 <p>This function removes all file watchers registered by the <code>watch</code> function</p>
+</li>
+<li><p><strong><code>router</code></strong></p>
+<p>This is an express router to expose all filestore functions. This router exposes the below REST apis for handling 
+the filestore</p>
+<ol>
+<li><p><code>GET</code> apis are used to fetch files. It can be used with the below parameters</p>
+<ol>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?find=&lt;&lt;glob pattern&gt;&gt;</code> to find the files matching a glob pattern in a
+folder. Responds with a JSON array of <a href="utils.html#Stats">module:filestore-disk/utils~Stats</a> for each file.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?pack=true</code> to export a folder into a <code>tar.gz</code> file and download it.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/or/file&gt;&gt;</code> to stream a file or get the list of files in a folder. Responds
+ with the file contents or Responds with a JSON array of <a href="utils.html#Stats">module:filestore-disk/utils~Stats</a> for each
+ file in case the path corresponds to a folder.</p>
+</li>
+</ol>
+</li>
+<li><p><code>PUT</code> apis are used to create files and folders</p>
+<ol>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?unpack=true</code> to import a tar.gz stream sent through the request body
+ into the specified folder. Responds with <code>200 OK</code> when successful.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?directory=true</code> to create a directory at the relative path. Responds
+ with <code>200 OK</code> when successful.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/file&gt;&gt;</code> to create a file with request body as contents. Responds with <code>200 OK</code> when
+ successful.</p>
+</li>
+</ol>
+</li>
+<li><p><code>POST</code></p>
+<ol>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?link=&lt;&lt;new/relative/path&gt;&gt;</code> to create a symlink for the path at the
+ new path. Responds with <code>200 OK</code> when successful.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?move=&lt;&lt;new/relative/path&gt;&gt;</code> to move the contents at the path to the
+ new path. Responds with <code>200 OK</code> when successful.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?copy=&lt;&lt;new/relative/path&gt;&gt;</code> to copy the contents at the path to the
+ new path. Responds with <code>200 OK</code> when successful.</p>
+</li>
+</ol>
+</li>
+<li><p><code>DELETE</code></p>
+<ol>
+<li><code>&lt;&lt;relative/path/to/base/folder/or/file&gt;&gt;</code> to delete the folder or file at the path. Responds with
+ <code>200 OK</code> when successful.</li>
+</ol>
+</li>
+</ol>
 </li>
 </ol></article>
     </section>
@@ -126,7 +175,7 @@ stream is essentially a tar.gz of a complete folder hierarchy that is extracted 
 </div>
 
 <nav>
-    <h2><a href="index.html">filestore.disk</a></h2><h3>Modules</h3><ul><li><a href="module-filestore-disk.html">filestore-disk</a></li><li><a href="create.html">filestore-disk/create</a></li><li><a href="deserialize.html">filestore-disk/deserialize</a></li><li><a href="find.html">filestore-disk/find</a></li><li><a href="get-stream.html">filestore-disk/get-stream</a></li><li><a href="link.html">filestore-disk/link</a></li><li><a href="read.html">filestore-disk/read</a></li><li><a href="remove.html">filestore-disk/remove</a></li><li><a href="rename.html">filestore-disk/rename</a></li><li><a href="serialize.html">filestore-disk/serialize</a></li><li><a href="unwatch.html">filestore-disk/unwatch</a></li><li><a href="utils.html">filestore-disk/utils</a></li><li><a href="watch.html">filestore-disk/watch</a></li></ul><h3>Externals</h3><ul><li><a href="external-base-logger.html">base-logger</a></li><li><a href="external-Buffer.html">Buffer</a></li><li><a href="external-findit.html">findit</a></li><li><a href="external-fs-extra.html">fs-extra</a></li><li><a href="external-fstream.html">fstream</a></li><li><a href="external-merge.html">merge</a></li><li><a href="external-minimatch.html">minimatch</a></li><li><a href="external-path.html">path</a></li><li><a href="external-q.html">q</a></li><li><a href="external-Readable.html">Readable</a></li><li><a href="external-stream.html">stream</a></li><li><a href="external-tar.html">tar</a></li></ul><h3>Namespaces</h3><ul><li><a href="FileStoreFunctions.html">FileStoreFunctions</a></li></ul>
+    <h2><a href="index.html">filestore.disk</a></h2><h3>Modules</h3><ul><li><a href="module-filestore-disk.html">filestore-disk</a></li><li><a href="create.html">filestore-disk/create</a></li><li><a href="duplicate.html">filestore-disk/duplicate</a></li><li><a href="find.html">filestore-disk/find</a></li><li><a href="pack.html">filestore-disk/pack</a></li><li><a href="read.html">filestore-disk/read</a></li><li><a href="remove.html">filestore-disk/remove</a></li><li><a href="router.html">filestore-disk/router</a></li><li><a href="unpack.html">filestore-disk/unpack</a></li><li><a href="unwatch.html">filestore-disk/unwatch</a></li><li><a href="utils.html">filestore-disk/utils</a></li><li><a href="watch.html">filestore-disk/watch</a></li></ul><h3>Externals</h3><ul><li><a href="external-base-logger.html">base-logger</a></li><li><a href="external-Buffer.html">Buffer</a></li><li><a href="external-express.html">express</a></li><li><a href="external-findit.html">findit</a></li><li><a href="external-fs-extra.html">fs-extra</a></li><li><a href="external-fstream.html">fstream</a></li><li><a href="external-merge.html">merge</a></li><li><a href="external-mime-types.html">mime-types</a></li><li><a href="external-minimatch.html">minimatch</a></li><li><a href="external-path.html">path</a></li><li><a href="external-q.html">q</a></li><li><a href="external-Readable.html">Readable</a></li><li><a href="external-stream.html">stream</a></li><li><a href="external-tar.html">tar</a></li><li><a href="external-util.html">util</a></li></ul><h3>Namespaces</h3><ul><li><a href="FileStoreFunctions.html">FileStoreFunctions</a></li></ul>
 </nav>
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>

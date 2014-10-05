@@ -92,6 +92,112 @@ the store.</p></div>
     
     
     
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl>
+            
+<dt>
+    <h4 class="name" id="router"><span class="type-signature"></span>router<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>This is an express router to expose all filestore functions. This router exposes the below REST apis
+for handling the filestore</p>
+<ol>
+<li><p><code>GET</code> apis are used to fetch files. It can be used with the below parameters</p>
+<ol>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?find=&lt;&lt;glob pattern&gt;&gt;</code> to find the files matching a glob pattern in a
+folder. Responds with a JSON array of <a href="utils.html#Stats">module:filestore-disk/utils~Stats</a> for each file.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?pack=true</code> to export a folder into a <code>tar.gz</code> file and download it.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/or/file&gt;&gt;</code> to stream a file or get the list of files in a folder. Responds
+with the file contents or Responds with a JSON array of <a href="utils.html#Stats">module:filestore-disk/utils~Stats</a> for each
+file in case the path corresponds to a folder.</p>
+</li>
+</ol>
+</li>
+<li><p><code>PUT</code> apis are used to create files and folders</p>
+<ol>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?unpack=true</code> to import a tar.gz stream sent through the request body
+into the specified folder. Responds with <code>200 OK</code> when successful.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?directory=true</code> to create a directory at the relative path. Responds
+with <code>200 OK</code> when successful.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/file&gt;&gt;</code> to create a file with request body as contents. Responds with <code>200 OK</code> when
+successful.</p>
+</li>
+</ol>
+</li>
+<li><p><code>POST</code></p>
+<ol>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?link=&lt;&lt;new/relative/path&gt;&gt;</code> to create a symlink for the path at the
+new path. Responds with <code>200 OK</code> when successful.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?move=&lt;&lt;new/relative/path&gt;&gt;</code> to move the contents at the path to the
+new path. Responds with <code>200 OK</code> when successful.</p>
+</li>
+<li><p><code>&lt;&lt;relative/path/to/base/folder/&gt;&gt;?copy=&lt;&lt;new/relative/path&gt;&gt;</code> to copy the contents at the path to the
+new path. Responds with <code>200 OK</code> when successful.</p>
+</li>
+</ol>
+</li>
+<li><p><code>DELETE</code></p>
+<ol>
+<li><code>&lt;&lt;relative/path/to/base/folder/or/file&gt;&gt;</code> to delete the folder or file at the path. Responds with
+<code>200 OK</code> when successful.</li>
+</ol>
+</li>
+</ol>
+    </div>
+    
+    
+    
+
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="router.js.html">filestore/router.js</a>, <a href="router.js.html#line65">line 65</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
     
     
         <h3 class="subsection-title">Methods</h3>
@@ -289,7 +395,7 @@ parent path at which the file or directory is to be created does not exist, it i
         
             
 <dt>
-    <h4 class="name" id="deserialize"><span class="type-signature"></span>deserialize<span class="signature">(relativePath, readStream)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
+    <h4 class="name" id="duplicate"><span class="type-signature"></span>duplicate<span class="signature">(oldPath, newPath, action)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
     
     
 </dt>
@@ -297,9 +403,9 @@ parent path at which the file or directory is to be created does not exist, it i
     
     
     <div class="description">
-        <p>The deserialize function is used to import an exported filestore stream into a folder. The
-exported filestore stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the
-relative path.</p>
+        <p>This function duplicates the file or folder at oldPath to the newPath. It copies, creates symlinks
+or moves the file / folder to the new path depending on the parameter passed. If the newPath does not exist,
+it is created.</p>
     </div>
     
 
@@ -333,7 +439,7 @@ relative path.</p>
 	
         <tr>
             
-                <td class="name"><code>relativePath</code></td>
+                <td class="name"><code>oldPath</code></td>
             
             
             <td class="type">
@@ -349,20 +455,20 @@ relative path.</p>
             
             
             
-            <td class="description last"><p>the directory path at which the serialized output is to be deserialized</p></td>
+            <td class="description last"><p>the actual path of the file or directory to duplicate</p></td>
         </tr>
 	
 	
 	
         <tr>
             
-                <td class="name"><code>readStream</code></td>
+                <td class="name"><code>newPath</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type"><a href="external-Readable.html">external:Readable</a></span>
+<span class="param-type">String</span>
 
 
             
@@ -372,7 +478,35 @@ relative path.</p>
             
             
             
-            <td class="description last"><p>the readable stream which is to be deserialized</p></td>
+            <td class="description last"><p>the new path where the file or directory is to be duplicated</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>action specifies the nature of duplication. It can take the following values</p>
+<ul>
+<li><code>L</code> if a symlink is to be created at the new path</li>
+<li><code>M</code> if the contents at the old path are to be moved to new path</li>
+<li><code>C</code> if the contents at the old path are to be copied to the new path</li>
+</ul></td>
         </tr>
 	
 	
@@ -403,7 +537,7 @@ relative path.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="deserialize.js.html">filestore/deserialize.js</a>, <a href="deserialize.js.html#line20">line 20</a>
+        <a href="duplicate.js.html">filestore/duplicate.js</a>, <a href="duplicate.js.html#line134">line 134</a>
     </li></ul></dd>
     
     
@@ -413,7 +547,11 @@ relative path.</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="FileStoreFunctions.html#serialize">FileStoreFunctions#serialize</a></li>
+            <li><a href="FileStoreFunctions.html#link">FileStoreFunctions~link</a></li>
+        
+            <li><a href="FileStoreFunctions.html#move">FileStoreFunctions~move</a></li>
+        
+            <li><a href="FileStoreFunctions.html#copy">FileStoreFunctions~copy</a></li>
         </ul>
     </dd>
     
@@ -435,7 +573,7 @@ relative path.</p>
     
             
 <div class="param-desc">
-    <p>A promise that gets resolved import succeeds</p>
+    <p>a promise that gets resolved when duplication succeeds.</p>
 </div>
 
 
@@ -624,7 +762,7 @@ file metadata for all such files.</p>
         
             
 <dt>
-    <h4 class="name" id="getStream"><span class="type-signature"></span>getStream<span class="signature">(relativePath)</span><span class="type-signature"> &rarr; {ReadStream}</span></h4>
+    <h4 class="name" id="pack"><span class="type-signature"></span>pack<span class="signature">(relativePath)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
     
     
 </dt>
@@ -632,7 +770,9 @@ file metadata for all such files.</p>
     
     
     <div class="description">
-        <p>This function creates and returns a readable stream from a file path.</p>
+        <p>This function packs any folder specified by the relativePath and creates a tar.gz stream
+from it. This stream can be stored or used to copy the folder to another location using
+<a href="FileStoreFunctions.html#unpack">unpack</a></p>
     </div>
     
 
@@ -682,7 +822,7 @@ file metadata for all such files.</p>
             
             
             
-            <td class="description last"><p>the file path to stream</p></td>
+            <td class="description last"><p>the path of the directory to pack</p></td>
         </tr>
 	
 	
@@ -713,12 +853,19 @@ file metadata for all such files.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="get-stream.js.html">filestore/get-stream.js</a>, <a href="get-stream.js.html#line17">line 17</a>
+        <a href="pack.js.html">filestore/pack.js</a>, <a href="pack.js.html#line20">line 20</a>
     </li></ul></dd>
     
     
     
     
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="FileStoreFunctions.html#unpack">FileStoreFunctions#unpack</a></li>
+        </ul>
+    </dd>
     
     
     
@@ -738,170 +885,7 @@ file metadata for all such files.</p>
     
             
 <div class="param-desc">
-    <p>a readable stream object created from the file</p>
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">ReadStream</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="link"><span class="type-signature"></span>link<span class="signature">(originalPath, linkPath)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>This function creates a symbolic link at linkPath pointing to the file or directory at original
-path</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>originalPath</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"><p>the actual path to link</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>linkPath</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"><p>the location where the new link should be created</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="link.js.html">filestore/link.js</a>, <a href="link.js.html#line21">line 21</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>a promise that gets resolved when the symbolic link is created</p>
+    <p>a promise that gets resolved with the read stream when serialization succeeds.</p>
 </div>
 
 
@@ -926,7 +910,7 @@ path</p>
         
             
 <dt>
-    <h4 class="name" id="read"><span class="type-signature"></span>read<span class="signature">(relativePath, <span class="optional">encoding</span>)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
+    <h4 class="name" id="read"><span class="type-signature"></span>read<span class="signature">(relativePath)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
     
     
 </dt>
@@ -956,8 +940,6 @@ path</p>
 		<th>Type</th>
 		
 		
-		<th>Argument</th>
-		
 		
 		
 		
@@ -983,52 +965,10 @@ path</p>
             </td>
             
             
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
             
             
             
             <td class="description last"><p>the actual path of the file or directory to read</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>encoding</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last"><p>the encoding to use. This parameter is ignored if the path to be read is a
-directory or a link</p></td>
         </tr>
 	
 	
@@ -1088,7 +1028,7 @@ directory or a link</p></td>
 <ul>
 <li>an array of <a href="utils.html#Stats">Stats</a> object for all child items if the read
 path is a folder or a symlink to a folder.</li>
-<li>The actual read contents if the read path is a file or a symlink to a file.</li>
+<li>The actual read stream if the read path is a file or a symlink to a file.</li>
 </ul>
 </div>
 
@@ -1254,7 +1194,7 @@ corresponds to a directory)</p>
         
             
 <dt>
-    <h4 class="name" id="rename"><span class="type-signature"></span>rename<span class="signature">(oldPath, newPath)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
+    <h4 class="name" id="unpack"><span class="type-signature"></span>unpack<span class="signature">(relativePath, readStream)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
     
     
 </dt>
@@ -1262,172 +1202,9 @@ corresponds to a directory)</p>
     
     
     <div class="description">
-        <p>This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPath
-does not exist, it is created.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>oldPath</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"><p>the actual path of the file or directory to move</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>newPath</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"><p>the new path where the file or directory is to be moved</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="rename.js.html">filestore/rename.js</a>, <a href="rename.js.html#line21">line 21</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <p>a promise that gets resolved when move succeeds.</p>
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type"><a href="external-q.html">external:q</a></span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="serialize"><span class="type-signature"></span>serialize<span class="signature">(relativePath)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>This function serializes any folder specified by the relativePath and creates a tar.gz stream
-from it. This stream can be stored or used to copy the folder to another location using
-<a href="FileStoreFunctions.html#deserialize">deserialize</a></p>
+        <p>The unpack function is used to import an exported filestore stream into a folder. The
+exported filestore stream is essentially a tar.gz of a complete folder hierarchy that is extracted at the
+relative path.</p>
     </div>
     
 
@@ -1477,7 +1254,30 @@ from it. This stream can be stored or used to copy the folder to another locatio
             
             
             
-            <td class="description last"><p>the path of the directory to serialize</p></td>
+            <td class="description last"><p>the directory path at which the packd output is to be unpacked</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>readStream</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="external-Readable.html">external:Readable</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>the readable stream which is to be unpacked</p></td>
         </tr>
 	
 	
@@ -1508,7 +1308,7 @@ from it. This stream can be stored or used to copy the folder to another locatio
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="serialize.js.html">filestore/serialize.js</a>, <a href="serialize.js.html#line20">line 20</a>
+        <a href="unpack.js.html">filestore/unpack.js</a>, <a href="unpack.js.html#line20">line 20</a>
     </li></ul></dd>
     
     
@@ -1518,7 +1318,7 @@ from it. This stream can be stored or used to copy the folder to another locatio
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="FileStoreFunctions.html#deserialize">FileStoreFunctions#deserialize</a></li>
+            <li><a href="FileStoreFunctions.html#pack">FileStoreFunctions#pack</a></li>
         </ul>
     </dd>
     
@@ -1540,7 +1340,7 @@ from it. This stream can be stored or used to copy the folder to another locatio
     
             
 <div class="param-desc">
-    <p>a promise that gets resolved with the read stream when serialization succeeds.</p>
+    <p>A promise that gets resolved import succeeds</p>
 </div>
 
 
@@ -1875,6 +1675,495 @@ file is changed, created or removed</p></td>
     
 </dd>
 
+        
+            
+<dt>
+    <h4 class="name" id="copy"><span class="type-signature">&lt;inner> </span>copy<span class="signature">(oldPath, newPath)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>This function copies the file or folder at oldPath to the newPath. If the newPath does not exist,
+it is created.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>oldPath</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>the actual path of the file or directory to copy</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>newPath</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>the new path where the file or directory is to be copied</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="duplicate.js.html">filestore/duplicate.js</a>, <a href="duplicate.js.html#line95">line 95</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>a promise that gets resolved when copy succeeds.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="external-q.html">external:q</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="link"><span class="type-signature">&lt;inner> </span>link<span class="signature">(originalPath, linkPath)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>This function creates a symbolic link at linkPath pointing to the file or directory at original
+path</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>originalPath</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>the actual path to link</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>linkPath</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>the location where the new link should be created</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="duplicate.js.html">filestore/duplicate.js</a>, <a href="duplicate.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>a promise that gets resolved when the symbolic link is created</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="external-q.html">external:q</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="move"><span class="type-signature">&lt;inner> </span>move<span class="signature">(oldPath, newPath)</span><span class="type-signature"> &rarr; {<a href="external-q.html">external:q</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>This function moves (aka renames) the file or folder at oldPath to the newPath. If the newPath
+does not exist, it is created.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>oldPath</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>the actual path of the file or directory to move</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>newPath</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"><p>the new path where the file or directory is to be moved</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="duplicate.js.html">filestore/duplicate.js</a>, <a href="duplicate.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>a promise that gets resolved when move succeeds.</p>
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="external-q.html">external:q</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
         </dl>
     
     
@@ -1894,7 +2183,7 @@ file is changed, created or removed</p></td>
 </div>
 
 <nav>
-    <h2><a href="index.html">filestore.disk</a></h2><h3>Modules</h3><ul><li><a href="module-filestore-disk.html">filestore-disk</a></li><li><a href="create.html">filestore-disk/create</a></li><li><a href="deserialize.html">filestore-disk/deserialize</a></li><li><a href="find.html">filestore-disk/find</a></li><li><a href="get-stream.html">filestore-disk/get-stream</a></li><li><a href="link.html">filestore-disk/link</a></li><li><a href="read.html">filestore-disk/read</a></li><li><a href="remove.html">filestore-disk/remove</a></li><li><a href="rename.html">filestore-disk/rename</a></li><li><a href="serialize.html">filestore-disk/serialize</a></li><li><a href="unwatch.html">filestore-disk/unwatch</a></li><li><a href="utils.html">filestore-disk/utils</a></li><li><a href="watch.html">filestore-disk/watch</a></li></ul><h3>Externals</h3><ul><li><a href="external-base-logger.html">base-logger</a></li><li><a href="external-Buffer.html">Buffer</a></li><li><a href="external-findit.html">findit</a></li><li><a href="external-fs-extra.html">fs-extra</a></li><li><a href="external-fstream.html">fstream</a></li><li><a href="external-merge.html">merge</a></li><li><a href="external-minimatch.html">minimatch</a></li><li><a href="external-path.html">path</a></li><li><a href="external-q.html">q</a></li><li><a href="external-Readable.html">Readable</a></li><li><a href="external-stream.html">stream</a></li><li><a href="external-tar.html">tar</a></li></ul><h3>Namespaces</h3><ul><li><a href="FileStoreFunctions.html">FileStoreFunctions</a></li></ul>
+    <h2><a href="index.html">filestore.disk</a></h2><h3>Modules</h3><ul><li><a href="module-filestore-disk.html">filestore-disk</a></li><li><a href="create.html">filestore-disk/create</a></li><li><a href="duplicate.html">filestore-disk/duplicate</a></li><li><a href="find.html">filestore-disk/find</a></li><li><a href="pack.html">filestore-disk/pack</a></li><li><a href="read.html">filestore-disk/read</a></li><li><a href="remove.html">filestore-disk/remove</a></li><li><a href="router.html">filestore-disk/router</a></li><li><a href="unpack.html">filestore-disk/unpack</a></li><li><a href="unwatch.html">filestore-disk/unwatch</a></li><li><a href="utils.html">filestore-disk/utils</a></li><li><a href="watch.html">filestore-disk/watch</a></li></ul><h3>Externals</h3><ul><li><a href="external-base-logger.html">base-logger</a></li><li><a href="external-Buffer.html">Buffer</a></li><li><a href="external-express.html">express</a></li><li><a href="external-findit.html">findit</a></li><li><a href="external-fs-extra.html">fs-extra</a></li><li><a href="external-fstream.html">fstream</a></li><li><a href="external-merge.html">merge</a></li><li><a href="external-mime-types.html">mime-types</a></li><li><a href="external-minimatch.html">minimatch</a></li><li><a href="external-path.html">path</a></li><li><a href="external-q.html">q</a></li><li><a href="external-Readable.html">Readable</a></li><li><a href="external-stream.html">stream</a></li><li><a href="external-tar.html">tar</a></li><li><a href="external-util.html">util</a></li></ul><h3>Namespaces</h3><ul><li><a href="FileStoreFunctions.html">FileStoreFunctions</a></li></ul>
 </nav>
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
