@@ -165,7 +165,7 @@ module.exports = function (config) {
                 if (request.query.link) {
                     return duplicate(request.path, request.query.link, duplicate.link);
                 } else if (request.query.move) {
-                    return duplicate(request.path, request.query.rename, duplicate.move);
+                    return duplicate(request.path, request.query.move, duplicate.move);
                 } else if (request.query.copy) {
                     return duplicate(request.path, request.query.copy, duplicate.copy);
                 } else {
