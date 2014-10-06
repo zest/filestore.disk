@@ -36,7 +36,7 @@ describe(
             function (done) {
                 fs.remove(outDir, done);
             }
-                );
+        );
         it(
             'should be able to create folders and files',
             function () {
@@ -44,11 +44,13 @@ describe(
                 return q.all(
                     endToQ(
                         supertest(app).put('/disk/folder01').
+                            query({ directory: true }).
                             expect(200).
                             expect('OK')
                     ),
                     endToQ(
                         supertest(app).put('/disk/folder01/folder02').
+                            query({ directory: true }).
                             expect(200).
                             expect('OK')
                     ),
@@ -85,11 +87,10 @@ describe(
                 );
             }
         );
-//        it(
+        //        it(
         //            'should be able to unpack a directory',
         //            function () {
-        //                var app = this.app,
-        //                    txt;
+        //                var app = this.app;
         //                return q.all(
         //                    disk.create('rest-put-pack/one/text1.txt', 'hello romeo'),
         //                    disk.create('rest-put-pack/two/text1.txt', 'hello romeo'),

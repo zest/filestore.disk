@@ -48,6 +48,17 @@ describe(
             }
         );
         it(
+            'should throw an error for an invalid find',
+            function () {
+                var app = this.app;
+                return endToQ(
+                    supertest(app).get('/disk/non-existant-folder').
+                        query({ find: '**/*.txt' }).
+                        expect(500)
+                );
+            }
+        );
+        it(
             'should be able to find a list from glob pattern',
             function () {
                 var app = this.app;
@@ -59,7 +70,8 @@ describe(
                 ).then(
                     function () {
                         return endToQ(
-                            supertest(app).get('/disk/rest-get?find=**%2F*.txt').
+                            supertest(app).get('/disk/rest-get').
+                                query({ find: '**/*.txt' }).
                                 expect('Content-Type', /json/).
                                 expect(
                                 function (response) {
@@ -71,7 +83,8 @@ describe(
                 ).then(
                     function () {
                         return endToQ(
-                            supertest(app).get('/disk/rest-get?find=*.txt').
+                            supertest(app).get('/disk/rest-get').
+                                query({ find: '*.txt' }).
                                 expect('Content-Type', /json/).
                                 expect(
                                 function (response) {
@@ -96,7 +109,8 @@ describe(
                 ).then(
                     function () {
                         return endToQ(
-                            supertest(app).get('/disk/rest-get-pack?pack=true').
+                            supertest(app).get('/disk/rest-get-pack').
+                                query({ pack: true }).
                                 expect('Content-Type', /compressed/).
                                 expect('Content-Disposition', /attachment/).
                                 parse(
@@ -123,6 +137,16 @@ describe(
                             )
                         );
                     }
+                );
+            }
+        );
+        it(
+            'should throw an error for an invalid pack',
+            function () {
+                var app = this.app;
+                return endToQ(
+                    supertest(app).get('/disk/non-existant-folder').
+                        query({ pack: true })
                 );
             }
         );
