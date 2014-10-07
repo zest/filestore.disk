@@ -1,6 +1,4 @@
 'use strict';
-// silence the logger
-require('base.logger').stop();
 var fs = require('fs-extra'),
     q = require('q'),
     outDir = require('path').join(__dirname, './../../.out'),
@@ -10,8 +8,6 @@ var fs = require('fs-extra'),
     supertest = require('supertest');
 chai.use(require('chai-as-promised'));
 chai.use(require('sinon-chai'));
-// long stack for q
-require('q').longStackSupport = true;
 var disk = require('./../../lib/index').slice(-1)[0](
     require('base.logger')(''),
     {
@@ -27,14 +23,24 @@ describe(
     'filestore.disk#router POST', function () {
         before(
             function (done) {
+                require('base.logger').stop();
                 this.app = express();
                 this.app.use('/disk', disk.router);
+                this.app.use(
+                    '*',
+                    /*jshint unused: true */
+                    function(err, req, res, next){
+                        res.status(500).end();
+                    }
+                    /*jshint unused: false */
+                );
                 fs.ensureDir(outDir, done);
             }
         );
         after(
             function (done) {
                 fs.remove(outDir, done);
+                require('base.logger').start();
             }
         );
         it(
