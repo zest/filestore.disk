@@ -4,8 +4,8 @@ var fs = require('fs-extra'),
     outDir = require('path').join(__dirname, './../../.out'),
     chai = require('chai'),
     express = require('express'),
-    expect = require('chai').expect,
-    supertest = require('supertest');
+    supertest = require('supertest'),
+    expect = require('chai').expect;
 chai.use(require('chai-as-promised'));
 chai.use(require('sinon-chai'));
 var disk = require('./../../lib/index').slice(-1)[0](
@@ -44,137 +44,98 @@ describe(
             }
         );
         it(
-            'should be able to move a folder',
+            'should be able to create folders and files',
             function () {
                 var app = this.app;
                 return q.all(
-                    disk.create('rest-post-move/one/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-move/two/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-move/three/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-move/text1.txt', 'hello romeo')
+                    endToQ(
+                        supertest(app).post('/disk/folder01').
+                            query({ directory: true }).
+                            expect(200).
+                            expect('OK')
+                    ),
+                    endToQ(
+                        supertest(app).post('/disk/folder01/folder02').
+                            query({ directory: true }).
+                            expect(200).
+                            expect('OK')
+                    ),
+                    endToQ(
+                        supertest(app).post('/disk/folder01/file01.js').
+                            send('new file').
+                            expect(200).
+                            expect('OK')
+                    )
                 ).then(
                     function () {
                         return endToQ(
-                            supertest(app).post('/disk/rest-post-move').
-                                query({ move: 'rest-post-move-new' }).
-                                expect(200).
-                                expect('OK')
+                            supertest(app).get('/disk/folder01').
+                                expect('Content-Type', /application\/json/).
+                                expect(
+                                function (response) {
+                                    expect(response.body.length).to.eql(2);
+                                }
+                            )
                         );
                     }
                 ).then(
                     function () {
-                        return q.all(
-                            endToQ(
-                                supertest(app).get('/disk/rest-post-move-new').
-                                    expect(
-                                    function (response) {
-                                        expect(response.body.length).to.eql(4);
-                                    }
-                                )
-                            ),
-                            endToQ(
-                                supertest(app).get('/disk/rest-post-move').
-                                    expect(500)
+                        return endToQ(
+                            supertest(app).get('/disk/folder01/file01.js').
+                                expect('Content-Type', /application\/javascript/).
+                                expect(
+                                function (response) {
+                                    expect(response.text).to.eql('new file');
+                                }
                             )
                         );
                     }
                 );
             }
         );
-        it(
-            'should be able to copy a folder',
-            function () {
-                var app = this.app;
-                return q.all(
-                    disk.create('rest-post-copy/one/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-copy/two/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-copy/three/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-copy/text1.txt', 'hello romeo')
-                ).then(
-                    function () {
-                        return endToQ(
-                            supertest(app).post('/disk/rest-post-copy').
-                                query({ copy: 'rest-post-copy-new' }).
-                                expect(200).
-                                expect('OK')
-                        );
-                    }
-                ).then(
-                    function () {
-                        return q.all(
-                            endToQ(
-                                supertest(app).get('/disk/rest-post-copy-new').
-                                    expect(
-                                    function (response) {
-                                        expect(response.body.length).to.eql(4);
-                                    }
-                                )
-                            ),
-                            endToQ(
-                                supertest(app).get('/disk/rest-post-copy').
-                                    expect(
-                                    function (response) {
-                                        expect(response.body.length).to.eql(4);
-                                    }
-                                )
-                            )
-                        );
-                    }
-                );
-            }
-        );
-        it(
-            'should be able to create symlink to a folder',
-            function () {
-                var app = this.app;
-                return q.all(
-                    disk.create('rest-post-link/one/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-link/two/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-link/three/text1.txt', 'hello romeo'),
-                    disk.create('rest-post-link/text1.txt', 'hello romeo')
-                ).then(
-                    function () {
-                        return endToQ(
-                            supertest(app).post('/disk/rest-post-link').
-                                query({ link: 'rest-post-link-new' }).
-                                expect(200).
-                                expect('OK')
-                        );
-                    }
-                ).then(
-                    function () {
-                        return q.all(
-                            endToQ(
-                                supertest(app).get('/disk/rest-post-link-new').
-                                    expect(
-                                    function (response) {
-                                        expect(response.body.length).to.eql(4);
-                                    }
-                                )
-                            ),
-                            endToQ(
-                                supertest(app).get('/disk/rest-post-link').
-                                    expect(
-                                    function (response) {
-                                        expect(response.body.length).to.eql(4);
-                                    }
-                                )
-                            )
-                        );
-                    }
-                );
-            }
-        );
-        it(
-            'should throw an error for invalid operations',
-            function () {
-                var app = this.app;
-                return endToQ(
-                    supertest(app).post('/disk/rest-post-link').
-                        query({ invalid: 'rest-post-link-new' }).
-                        expect(500)
-                );
-            }
-        );
+        //        it(
+        //            'should be able to unpack a directory',
+        //            function () {
+        //                var app = this.app;
+        //                return q.all(
+        //                    disk.create('rest-post-pack/one/text1.txt', 'hello romeo'),
+        //                    disk.create('rest-post-pack/two/text1.txt', 'hello romeo'),
+        //                    disk.create('rest-post-pack/three/text1.txt', 'hello romeo'),
+        //                    disk.create('rest-post-pack/text1.txt', 'hello romeo')
+        //                ).then(
+        //                    function () {
+        //                        return endToQ(
+        //                            supertest(app).get('/disk/rest-post-pack?pack=true').
+        //                                expect('Content-Type', /compressed/).
+        //                                expect('Content-Disposition', /attachment/).expect(
+        //                                function (response) {
+        //                                    console.log(response.files);
+        //                                    txt = response.text;
+        //                                }
+        //                            )
+        //                        );
+        //                    }
+        //                ).then(
+        //                    function () {
+        //                        return endToQ(
+        //                            supertest(app).post('/disk/rest-post-uunack?unpack=true').
+        //                                send(txt).
+        //                                expect(200).
+        //                                expect('OK')
+        //                        );
+        //                    }
+        //                ).then(
+        //                    function () {
+        //                        return endToQ(
+        //                    supertest(app).get('/disk/rest-post-unpack').expect('Content-Type', /json/).expect(
+        //                                function (response) {
+        //                                    expect(response.body.length).to.eql(3);
+        //                                }
+        //                            )
+        //                        );
+        //                    }
+        //                );
+        //            }
+        //        );
     }
 );

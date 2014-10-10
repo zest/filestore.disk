@@ -49,7 +49,7 @@ describe(
                 var app = this.app;
                 return q.all(
                     endToQ(
-                        supertest(app).put('/disk/folder02/file01.js').
+                        supertest(app).post('/disk/folder02/file01.js').
                             send('new file').
                             expect(200).
                             expect('OK')
